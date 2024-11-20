@@ -16,12 +16,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableAspectJAutoProxy
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-	private final String uploadFilePath;
-
-	public WebMvcConfiguration(@Value("${file.path.upload-files}") String uploadFilePath) {
-		this.uploadFilePath = uploadFilePath;
-	}
-
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("http://localhost:5173")
