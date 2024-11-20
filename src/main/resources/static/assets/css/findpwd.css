@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+
+@font-face {
+  font-family: "noto-sans";
+  src: url("../fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+
+html,
+body {
+  margin: 0;
+	padding: 0;
+	height: 100%;
+	min-width: 768px;
+	font-family: "noto-sans", sans-serif;
+}
+
+/* content 메인 */
+#container {
+  margin: 0px 300px;
+	height: 90%;
+	display : flex;
+	align-items: center;
+}
+
+h1 {
+	flex-basis: 30%;
+  font-size: 3rem;
+  margin: 0;
+  text-align: center;
+}
+
+#findPwdForm {
+  flex-basis: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+img {
+  width: 33%;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.row .findPwd {
+	margin: 100px 0px;
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
+
+  <!-- ResultMap for TripDto -->
+  <resultMap id="trip" type="tripDto">
+    <result column="area_code" property="area_code" />
+    <result column="si_gun_gu_code" property="si_gun_gu_code" />
+    <result column="content_type_id" property="content_type_id" />
+    <result column="content_id" property="content_id" />
+    <result column="title" property="title" />
+    <result column="first_image1" property="img1" />
+    <result column="first_image2" property="img2" />
+    <result column="addr1" property="addr1" />
+    <result column="addr2" property="addr2" />
+    <result column="tel" property="tel" />
+    <result column="latitude" property="latitude" />
+    <result column="longitude" property="longitude" />
+    <result column="map_level" property="map_level" />
+  </resultMap>
+
+  <!-- ResultMap for AreaDto -->
+  <resultMap id="area" type="areaDto">
+    <result column="sido_code" property="sido_code" />
+    <result column="sido_name" property="sido_name" />
+    <result column="gugun_code" property="gugun_code" />
+    <result column="gugun_name" property="gugun_name" />
+  </resultMap>
+
+  <!-- Get total count for pagination -->
+  <select id="getSearchTotalCount" parameterType="tripDto" resultType="int">
+    SELECT COUNT(*)
+    FROM attractions
+    WHERE 1=1
+    <if test="area_code != -1">
+      AND area_code = #{area_code}
+    </if>
+    <if test="content_type_id != -1">
+      AND content_type_id = #{content_type_id}
+    </if>
+    <if test="title != null and title != ''">
+      AND title LIKE CONCAT('%', #{title}, '%')
+    </if>
+  </select>
+
+  <!-- Get search list with pagination -->
+  <select id="searchListAll" parameterType="map" resultMap="trip">
+    SELECT *
+    FROM attractions
+    WHERE 1=1
+    <if test="tripDto.area_code != -1">
+      AND area_code = #{tripDto.area_code}
+    </if>
+    <if test="tripDto.content_type_id != -1">
+      AND content_type_id = #{tripDto.content_type_id}
+    </if>
+    <if test="tripDto.title != null and tripDto.title != ''">
+      AND title LIKE CONCAT('%', #{tripDto.title}, '%')
+    </if>
+    ORDER BY title
+    LIMIT #{offset}, #{totalCount}
+  </select>
+
+  <!-- Select all areas -->
+  <select id="selectAllSi" resultMap="area">
+    SELECT *
+    FROM sidos
+  </select>
+
+  <!-- Select all attractions with pagination -->
+  <select id="selectAll" resultMap="trip">
+    SELECT *
+    FROM attractions
+    LIMIT #{param1}, #{param2}
+  </select>
+
+  <!-- Get total count of attractions -->
+  <select id="getTotalCount" resultType="int">
+    SELECT COUNT(*)
+    FROM attractions
+  </select>
+
+</mapper>

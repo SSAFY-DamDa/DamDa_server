@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "noto-sans";
+  src: url("../fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+
+/* 헤더 */
+header {
+  min-width: 768px;
+  padding: 10px 200px;
+  background-color: white;
+  font-family: "noto-sans", sans-serif;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+img {
+  width: 33%;
+}
+
+#logo {
+  width: 33%;
+}
+
+.btnCustom {
+  padding: 10px 20px;
+  min-width: 100px;
+  min-height: 30px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center; /* 가로 - 중앙으로 */
+  justify-content: center; /* 세로 - 상단으로 */ 
+  border: none;
+  border-radius: 100px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  text-align: center;
+  background-color: white;
+}
+
+.linkCustom {
+  padding: 10px 20px;
+  min-width: 100px;
+  min-height: 30px;
+  border-radius: 100px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+  text-align: center;
+  background-color: white;
+}
+
+
+#header_login {
+  display: flex;
+  gap: 20px;
+}
+
+#header_logout {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 로그인, 회원가입 모달창 */
+#loginModalContainer {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: clamp(50%, 1rem, 100%);
+  z-index: 99;
+}
+
+#signupModalContainer {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: clamp(50%, 1rem, 100%);
+  z-index: 99;
+}
+
+#loginModalContent {
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 40%;
+  padding: 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  transform: translateY(-50%);
+}
+
+#signupModalContent {
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 50%;
+  padding: 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  transform: translateY(-50%);
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+#signupForm {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.formItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.labelContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.btnCustom.inputModal {
+  width: 50%;
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.btnCustom.select {
+  width: 50%;
+  max-width: 100px;
+  min-width: 50px;
+}
+
+.btnCustom.confirmBtn {
+  min-height: 35px;
+  background-color: #e9f3ff;
+  color: black;
+}
+
+.btnCustom.closeBtn {
+  min-height: 35px;
+  background-color: white;
+  color: black;
+}
+
+.input-group {
+	display: flex;
+	gap: 5px;
+	justify-content: flex-end;
+}
+
+.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-control, .input-group:not(.has-validation)>.form-floating:not(:last-child)>.form-select, .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating) {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius : 100px;
+}
+
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: calc(var(--bs-border-width)* -1);
+    border-top-left-radius: 100px;
+    border-bottom-left-radius:100px;
+}

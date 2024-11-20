@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: "noto-sans";
+	src: url("../fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+
+/* 공통 */
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-width: 768px;
+	font-family: "noto-sans", sans-serif;
+}
+
+#container {
+	height: 70%;
+	display : flex;
+	justify-content : center;
+	align-items: center;
+}
+
+#mainContent {
+	width: 100%; 
+	display : flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: 700;
+	margin: 0;
+}
+
+.mainContext {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 40px;
+}
