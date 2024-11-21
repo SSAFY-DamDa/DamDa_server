@@ -14,6 +14,9 @@
     <result column="join_date" property="joinDate" />
     <result column="user_status" property="status" />
     <result column="token" property="refreshToken" />
+    <result column="birth_date" property="birthDate" />
+    <result column="phone_num" property="phoneNum" />
+    <result column="address" property="address" />
   </resultMap>
 
   <!-- Check if user ID exists -->

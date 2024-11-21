@@ -42,7 +42,6 @@ public class MemberController {
 	@GetMapping("/idcheck")
 	public ResponseEntity<Map<String, String>> idCheck(@RequestParam String checkid) {
 		Map<String, String> resultMap = new HashMap<>();
-		System.out.println("checkid: " + checkid);
 		try {
 			int cnt = memberService.idCheck(checkid);
 			resultMap.put("checkid", checkid);
@@ -217,10 +216,8 @@ public class MemberController {
 	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String id) {
 		try {
 			MemberDto member = memberService.selectUser(id);
-
 			String decryptPWD = AesUtil.decrypt(member.getUserPwd());
 			member.setUserPwd(decryptPWD);
-
 			return new ResponseEntity<>(member, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("사용자 정보 불러오는 중 오류 발생: {}", e.getMessage());
