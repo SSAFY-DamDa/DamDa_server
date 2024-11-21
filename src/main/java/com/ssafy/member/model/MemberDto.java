@@ -101,11 +101,11 @@ public class MemberDto {
 		this.birthDate = birthDate;
 	}
 
-	public String getPhoneNumber() {
+	public String getPhoneNum() {
 		return phoneNum;
 	}
 
-	public void setPhoneNumber(String phoneNum) {
+	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 
