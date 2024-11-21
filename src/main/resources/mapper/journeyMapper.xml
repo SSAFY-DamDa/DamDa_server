@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.journey.model.mapper.JourneyMapper">
+
+    <resultMap id="journeyResultMap" type="com.ssafy.journey.model.JourneyDto">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="title" column="title" />
+        <result property="startDate" column="start_date" />
+        <result property="endDate" column="end_date" />
+        <result property="personnel" column="personnel" />
+        <result property="color" column="color" />
+        <result property="contentTypeId" column="content_type_id" />
+        <result property="sidoCode" column="sido_code" />
+        <result property="gugunCode" column="gugun_code" />
+    </resultMap>
+
+    <resultMap id="journeyRouteResultMap" type="com.ssafy.journey.model.JourneyRouteDto">
+        <id property="journeyId" column="journey_id" />
+        <result property="day" column="day" />
+        <result property="orderInDay" column="order_in_day" />
+        <result property="contentId" column="content_id" />
+    </resultMap>
+
+    <insert id="insertJourney">
+        INSERT INTO journeys (user_id, title, start_date, end_date, personnel, color, content_type_id, sido_code, gugun_code)
+        VALUES (#{userId}, #{title}, #{startDate}, #{endDate}, #{personnel}, #{color}, #{contentTypeId}, #{sidoCode}, #{gugunCode})
+    </insert>
+
+    <insert id="insertJourneyRoute">
+        INSERT INTO journey_routes (journey_id, day, order_in_day, content_id)
+        VALUES (#{journeyId}, #{day}, #{orderInDay}, #{contentId})
+    </insert>
+
+    <update id="updateJourney">
+        UPDATE journeys
+        SET title = #{title}, start_date = #{startDate}, end_date = #{endDate},
+            personnel = #{personnel}, color = #{color}, content_type_id = #{contentTypeId},
+            sido_code = #{sidoCode}, gugun_code = #{gugunCode}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteJourney">
+        DELETE FROM journeys WHERE id = #{id}
+    </delete>
+
+    <select id="selectJourneyList" resultType="com.ssafy.journey.model.JourneyDto">
+        SELECT * FROM journeys
+    </select>
+
+    <select id="selectJourneyById" parameterType="int" resultType="com.ssafy.journey.model.JourneyDto">
+        SELECT * FROM journeys WHERE id = #{id}
+    </select>
+
+</mapper>
