@@ -42,6 +42,7 @@ public class MemberController {
 	@GetMapping("/idcheck")
 	public ResponseEntity<Map<String, String>> idCheck(@RequestParam String checkid) {
 		Map<String, String> resultMap = new HashMap<>();
+		System.out.println("checkid: " + checkid);
 		try {
 			int cnt = memberService.idCheck(checkid);
 			resultMap.put("checkid", checkid);
