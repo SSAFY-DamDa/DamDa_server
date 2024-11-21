@@ -154,6 +154,7 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `content_type_id` INT NOT NULL,
   `sido_code` INT NOT NULL, 
   `gugun_code` INT NOT NULL,
+  `color` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`sido_code`) REFERENCES `sidos` (`sido_code`),
   FOREIGN KEY (`gugun_code`) REFERENCES `guguns` (`gugun_code`)
