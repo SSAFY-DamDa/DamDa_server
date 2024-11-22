@@ -62,7 +62,7 @@ public class TripController {
     	try {
             int sizePerPage = 10;
             TripDto tripDto = new TripDto();  
-            
+            	
             areaCode = areaCode == 0 ? -1 :areaCode;
             contentTypeId = contentTypeId == 0 ? -1 : contentTypeId;
             
@@ -87,6 +87,32 @@ public class TripController {
             int totalPage = searchTotalCount / 10;
             dataMap.put("totalPage", searchTotalCount % sizePerPage == 0 ? totalPage : totalPage + 1);
             System.out.println(dataMap.get("totalPage"));
+
+            return new ResponseEntity<>(dataMap, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("여행지 검색 중 에러 발생: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/search-ai")
+    public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int contentTypeId) {
+    	System.out.println("ac: " + areaCode + " cti: " + contentTypeId);
+    	try {
+            TripDto tripDto = new TripDto();  
+            	
+            areaCode = areaCode == 0 ? -1 :areaCode;
+            contentTypeId = contentTypeId == 0 ? -1 : contentTypeId;
+            
+            tripDto.setArea_code(areaCode);
+            tripDto.setContent_type_id(contentTypeId);
+            
+            List<TripDto> list = tripService.searchAI(tripDto);
+            
+            System.out.println("list"+ list);
+            
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("tripList", list);
 
             return new ResponseEntity<>(dataMap, HttpStatus.OK);
         } catch (Exception e) {

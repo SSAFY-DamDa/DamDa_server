@@ -25,6 +25,11 @@ public class TripServiceImpl implements TripService {
 		map.replace("offset", offset * totalCount);
 		return tripMapper.searchListAll(map);
 	}
+	
+	@Override
+	public List<TripDto> searchAI(TripDto tripDto) throws SQLException {
+		return tripMapper.searchAI(tripDto);
+	}
 
 	@Override
 	public List<AreaDto> selectAllSi() throws SQLException {
