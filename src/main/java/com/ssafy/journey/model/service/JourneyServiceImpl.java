@@ -16,28 +16,27 @@ public class JourneyServiceImpl implements JourneyService {
     private JourneyMapper journeyMapper;
 
     @Override
-    public void registerJourney(JourneyDto journeyDto) {
+    public int registerJourney(JourneyDto journeyDto) throws Exception {
         journeyMapper.insertJourney(journeyDto);
-        
+        return journeyDto.getId(); // Auto-generated key should be set after insert
     }
 
     @Override
-    public void updateJourney(JourneyDto journeyDto) {
-        journeyMapper.updateJourney(journeyDto);
+    public void registerJourneyRoute(JourneyRouteDto journeyRouteDto) throws Exception {
+        journeyMapper.insertJourneyRoute(journeyRouteDto);
     }
 
     @Override
-    public void deleteJourney(int id) {
-        journeyMapper.deleteJourney(id);
+    public void registerMemberJourney(String userId, int journeyId) throws Exception {
+        journeyMapper.insertMemberJourney(userId, journeyId);
     }
 
     @Override
-    public List<JourneyDto> getJourneyList() {
-        return journeyMapper.selectJourneyList();
-    }
-
-    @Override
-    public List<JourneyDto> getJourneyById(String id) {
-        return journeyMapper.selectJourneyById(id);
+    public JourneyDto getJourneyById(int journeyId) throws Exception {
+        JourneyDto journeyDto = journeyMapper.selectJourneyById(journeyId);
+        if (journeyDto == null) {
+            throw new Exception("Journey not found");
+        }
+        return journeyDto;
     }
 }

@@ -11,9 +11,7 @@ import java.util.List;
 @Mapper
 public interface JourneyMapper {
     void insertJourney(JourneyDto journeyDto);
-    void updateJourney(JourneyDto journeyDto);
-    void deleteJourney(int id);
-    List<JourneyDto> selectJourneyList();
-    List<JourneyDto> selectJourneyById(String id);
     void insertJourneyRoute(JourneyRouteDto journeyRouteDto);
+    void insertMemberJourney(String userId, int journeyId);
+    JourneyDto selectJourneyById(int id);
 }

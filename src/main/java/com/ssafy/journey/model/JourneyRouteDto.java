@@ -1,4 +1,3 @@
-// JourneyRouteDto.java
 package com.ssafy.journey.model;
 
 public class JourneyRouteDto {
@@ -38,5 +37,10 @@ public class JourneyRouteDto {
 
     public void setContentId(int contentId) {
         this.contentId = contentId;
+    }
+
+    @Override
+    public String toString() {
+        return "JourneyRouteDto [journeyId=" + journeyId + ", day=" + day + ", orderInDay=" + orderInDay + ", contentId=" + contentId + "]";
     }
 }

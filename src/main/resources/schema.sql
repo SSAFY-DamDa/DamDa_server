@@ -151,13 +151,8 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `personnel` INT NOT NULL,
-  `content_type_id` INT NOT NULL,
-  `sido_code` INT NOT NULL, 
-  `gugun_code` INT NOT NULL,
   `color` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`sido_code`) REFERENCES `sidos` (`sido_code`),
-  FOREIGN KEY (`gugun_code`) REFERENCES `guguns` (`gugun_code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
@@ -180,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `journey_routes` (
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `dbdamda`.`member_journey` ;
 CREATE TABLE IF NOT EXISTS `member_journey` (
-`id` INT NOT NULL,
+`id` INT NOT NULL AUTO_INCREMENT,
   `journey_id` INT NOT NULL, 
   `user_id` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
@@ -201,7 +196,6 @@ CREATE TABLE IF NOT EXISTS `journey_accessibility` (
 ) ENGINE=InnoDB;
 
 commit;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
