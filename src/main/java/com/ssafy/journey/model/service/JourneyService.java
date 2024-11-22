@@ -11,4 +11,5 @@ public interface JourneyService {
     void registerJourneyRoute(JourneyRouteDto journeyRouteDto) throws Exception;
     void registerMemberJourney(String userId, int journeyId) throws Exception;
     JourneyDto getJourneyById(int journeyId) throws Exception;
+    List<JourneyDto> selectJourneyByUserId(String userId);
 }
