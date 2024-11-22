@@ -1,64 +1,85 @@
 package com.ssafy.journey.controller;
 
-import com.ssafy.faq.model.FAQDto;
 import com.ssafy.journey.model.JourneyDto;
+import com.ssafy.journey.model.JourneyRouteDto;
 import com.ssafy.journey.model.service.JourneyService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.ssafy.trip.model.TripDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/journey")
-@Tag(name = "여행 컨트롤러", description = "여행 계획 관련 작업을 처리하는 클래스입니다.")
 public class JourneyController {
 
     @Autowired
     private JourneyService journeyService;
 
     @PostMapping("/register")
-    public String registerJourney(@RequestBody JourneyDto journeyDto) {
-        journeyService.registerJourney(journeyDto);
-        return "Journey registered successfully";
+    public ResponseEntity<Map<String, Integer>> registerJourney(@RequestBody JourneyDto journeyDto, @RequestParam String userId) {
+    	Map<String, Integer> resultMap = new HashMap<>();
+        try {
+            System.out.println(journeyDto);
+            // 1. 여행 정보 등록 후 생성된 journeyId 반환
+            int journeyId = journeyService.registerJourney(journeyDto);
+            
+            System.out.println("journeyId " + journeyId);
+            System.out.println("userId " + userId);
+            
+            // 2. member_journey 테이블에 해당 유저와 여행 연결
+            journeyService.registerMemberJourney(userId, journeyId);
+            
+            System.out.println("register member journey work ");
+            
+            resultMap.put("journeyId", journeyId);
+
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PutMapping("/update/{id}")
-    public String updateJourney(@PathVariable int id, @RequestBody JourneyDto journeyDto) {
-        journeyDto.setJourneyId(id);
-        journeyService.updateJourney(journeyDto);
-        return "Journey updated successfully";
+    @PostMapping("/registerDetail")
+    public ResponseEntity<String> registerJourneyDetail(@RequestBody Map<String, List<TripDto>> journeyDetail, @RequestParam int journeyId) {
+        try {
+        	System.out.println("detail 들어옴 " + journeyDetail);
+            // 3. journeyDetail로부터 경로 정보 저장
+            if (journeyDetail != null) {
+                for (Map.Entry<String, List<TripDto>> entry : journeyDetail.entrySet()) {
+                    int dayNumber = Integer.parseInt(entry.getKey().replace("day", ""));
+                    List<TripDto> tripList = entry.getValue();
+                    for (int i = 0; i < tripList.size(); i++) {
+                        TripDto tripDto = tripList.get(i);
+                        JourneyRouteDto journeyRouteDto = new JourneyRouteDto();
+                        journeyRouteDto.setJourneyId(journeyId);
+                        journeyRouteDto.setDay(dayNumber);
+                        journeyRouteDto.setOrderInDay(i + 1);
+                        journeyRouteDto.setContentId(tripDto.getContent_id());
+                        journeyService.registerJourneyRoute(journeyRouteDto);
+                    }
+                }
+            }
+
+            return new ResponseEntity<>("Journey detail registered successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error registering journey detail: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteJourney(@PathVariable int id) {
-        journeyService.deleteJourney(id);
-        return "Journey deleted successfully";
-    }
-
-    @GetMapping("/list")
-    public List<JourneyDto> getJourneyList() {
-        return journeyService.getJourneyList();
-    }
-
-    @GetMapping
-    public ResponseEntity<Map<String, Object>> getJourney(@RequestParam String id) {
-    	System.out.println("id is " + id);
-    	try {
-    		List<JourneyDto> journey = journeyService.getJourneyById(id);
-    		System.out.println("run1");
-			Map<String, Object> dataMap = new HashMap<>();
-			dataMap.put("journey", journey);
-			System.out.println("run2 " + dataMap);
-			return new ResponseEntity<>(dataMap, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+    @GetMapping("/{id}")
+    public ResponseEntity<JourneyDto> getJourneyById(@PathVariable int id) {
+        try {
+            JourneyDto journeyDto = journeyService.getJourneyById(id);
+            return new ResponseEntity<>(journeyDto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
