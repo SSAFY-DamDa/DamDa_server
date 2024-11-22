@@ -96,11 +96,16 @@
     FROM attractions
   </select>
   
+  <select id="getAttractionsByContentId" parameterType="int" resultMap="trip">
+  	SELECT *
+  	FROM attractions
+  	WHERE content_id = #{contentId}
+  </select>
+
   <select id="selectGuGun" resultMap="area">
     SELECT *
     FROM guguns
     WHERE sido_code = #{param1}
-    
   </select>
 
 </mapper>
