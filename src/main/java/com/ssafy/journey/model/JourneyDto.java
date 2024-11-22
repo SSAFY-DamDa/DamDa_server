@@ -1,36 +1,27 @@
-// JourneyDto.java
 package com.ssafy.journey.model;
 
-import java.util.List;
+import java.util.Date;
 
 public class JourneyDto {
-    private int id;
-    private String userId;
+    private int journeyId;
     private String title;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private int personnel;
+    private String sidoName;
+    private String gugunName;
+    private String attractionTitle;
+    private String attractionAddress;
+    private int day;
+    private int orderInDay;
     private String color;
-    private int contentTypeId;
-    private int sidoCode;
-    private int gugunCode;
-    private List<JourneyRouteDto> tripList;
 
-    // Getters and Setters
-    public int getId() {
-        return id;
+    public int getJourneyId() {
+        return journeyId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setJourneyId(int journeyId) {
+        this.journeyId = journeyId;
     }
 
     public String getTitle() {
@@ -41,19 +32,19 @@ public class JourneyDto {
         this.title = title;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -65,6 +56,54 @@ public class JourneyDto {
         this.personnel = personnel;
     }
 
+    public String getSidoName() {
+        return sidoName;
+    }
+
+    public void setSidoName(String sidoName) {
+        this.sidoName = sidoName;
+    }
+
+    public String getGugunName() {
+        return gugunName;
+    }
+
+    public void setGugunName(String gugunName) {
+        this.gugunName = gugunName;
+    }
+
+    public String getAttractionTitle() {
+        return attractionTitle;
+    }
+
+    public void setAttractionTitle(String attractionTitle) {
+        this.attractionTitle = attractionTitle;
+    }
+
+    public String getAttractionAddress() {
+        return attractionAddress;
+    }
+
+    public void setAttractionAddress(String attractionAddress) {
+        this.attractionAddress = attractionAddress;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getOrderInDay() {
+        return orderInDay;
+    }
+
+    public void setOrderInDay(int orderInDay) {
+        this.orderInDay = orderInDay;
+    }
+
     public String getColor() {
         return color;
     }
@@ -73,35 +112,4 @@ public class JourneyDto {
         this.color = color;
     }
 
-    public int getContentTypeId() {
-        return contentTypeId;
-    }
-
-    public void setContentTypeId(int contentTypeId) {
-        this.contentTypeId = contentTypeId;
-    }
-
-    public int getSidoCode() {
-        return sidoCode;
-    }
-
-    public void setSidoCode(int sidoCode) {
-        this.sidoCode = sidoCode;
-    }
-
-    public int getGugunCode() {
-        return gugunCode;
-    }
-
-    public void setGugunCode(int gugunCode) {
-        this.gugunCode = gugunCode;
-    }
-
-    public List<JourneyRouteDto> getTripList() {
-        return tripList;
-    }
-
-    public void setTripList(List<JourneyRouteDto> tripList) {
-        this.tripList = tripList;
-    }
 }

@@ -43,5 +43,10 @@ public class SwaggerConfiguration {
 	public GroupedOpenApi faqApi() {
 		return GroupedOpenApi.builder().group("damda-faq").pathsToMatch("/faq/**").build();
 	}
+	
+	@Bean
+	public GroupedOpenApi journeApi() {
+		return GroupedOpenApi.builder().group("damda-journey").pathsToMatch("/journey/**").build();
+	}
 
 }

@@ -14,6 +14,6 @@ public interface JourneyMapper {
     void updateJourney(JourneyDto journeyDto);
     void deleteJourney(int id);
     List<JourneyDto> selectJourneyList();
-    JourneyDto selectJourneyById(int id);
+    List<JourneyDto> selectJourneyById(String id);
     void insertJourneyRoute(JourneyRouteDto journeyRouteDto);
 }

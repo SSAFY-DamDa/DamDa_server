@@ -10,5 +10,5 @@ public interface JourneyService {
     void updateJourney(JourneyDto journeyDto);
     void deleteJourney(int id);
     List<JourneyDto> getJourneyList();
-    JourneyDto getJourneyById(int id);
+    List<JourneyDto> getJourneyById(String id);
 }
