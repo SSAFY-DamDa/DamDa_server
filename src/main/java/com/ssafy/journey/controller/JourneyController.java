@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,5 +92,16 @@ public class JourneyController {
     	} catch (Exception e) {
     		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     	}
+    }
+    
+    @GetMapping("/detail/{journeyid}")
+    public ResponseEntity<Map<String, List<TripDto>>> getJourneyDetail(@PathVariable int journeyid) {
+        try {
+        	System.out.println("ji: " + journeyid);
+            Map<String, List<TripDto>> journeyDetail = journeyService.getJourneyDetail(journeyid);
+            return new ResponseEntity<>(journeyDetail, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

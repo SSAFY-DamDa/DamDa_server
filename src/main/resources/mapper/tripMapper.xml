@@ -81,5 +81,11 @@
     SELECT COUNT(*)
     FROM attractions
   </select>
+  
+  <select id="getAttractionsByContentId" parameterType="int" resultMap="trip">
+  	SELECT *
+  	FROM attractions
+  	WHERE content_id = #{contentId}
+  </select>
 
 </mapper>
