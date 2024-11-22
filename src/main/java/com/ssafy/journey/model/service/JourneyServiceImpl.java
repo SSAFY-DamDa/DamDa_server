@@ -4,16 +4,25 @@ package com.ssafy.journey.model.service;
 import com.ssafy.journey.model.JourneyDto;
 import com.ssafy.journey.model.JourneyRouteDto;
 import com.ssafy.journey.model.mapper.JourneyMapper;
+import com.ssafy.trip.model.TripDto;
+import com.ssafy.trip.model.mapper.TripMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class JourneyServiceImpl implements JourneyService {
 
     @Autowired
     private JourneyMapper journeyMapper;
+    
+    @Autowired
+    private TripMapper tripMapper;
 
     @Override
     public int registerJourney(JourneyDto journeyDto) throws Exception {
@@ -44,5 +53,29 @@ public class JourneyServiceImpl implements JourneyService {
 	public List<JourneyDto> selectJourneyByUserId(String userId) {
 		// TODO Auto-generated method stub
 		return journeyMapper.selectJourneyByUserId(userId);
+	}
+
+	@Override
+	public Map<String, List<TripDto>> getJourneyDetail(int journeyId) throws Exception {
+		List<JourneyRouteDto> routeList = journeyMapper.selectJourneyRoutesByJourneyId(journeyId);
+		System.out.println(routeList);
+        // 결과를 Map<String, List<TripDto>> 형식으로 변환
+        Map<String, List<TripDto>> journeyDetail = new LinkedHashMap<>();
+        int day = 1;
+        List<TripDto> trips = new ArrayList<>();
+        for (JourneyRouteDto route : routeList) {
+        	int nowDay = route.getDay();
+        	if(day != nowDay) {
+        		String dayKey = "day" + day;
+        		journeyDetail.put(dayKey, trips);
+        		day = nowDay;
+        		trips = new ArrayList<>();
+        	}
+            TripDto attractionsByContentId = tripMapper.getAttractionsByContentId(route.getContentId());
+            trips.add(attractionsByContentId);
+        }
+        journeyDetail.put("day" + day, trips);
+
+        return journeyDetail;
 	}
 }
