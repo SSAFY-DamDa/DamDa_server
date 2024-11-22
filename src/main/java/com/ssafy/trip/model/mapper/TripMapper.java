@@ -19,4 +19,6 @@ public interface TripMapper {
 	int getSearchTotalCount(TripDto tripDto) throws SQLException;
 
 	public TripDto getAttractionsByContentId(int contentId);
+	
+	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException;
 }

@@ -45,4 +45,9 @@ public class TripServiceImpl implements TripService {
 	public int getTotalCount() throws SQLException {
 		return tripMapper.getTotalCount();
 	}
+
+	@Override
+	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException {
+		return tripMapper.selectGuGun(sidoCode);
+	}
 }

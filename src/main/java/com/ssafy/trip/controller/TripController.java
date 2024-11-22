@@ -109,4 +109,30 @@ public class TripController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/list-si")
+    public ResponseEntity<List<AreaDto>> getSiList() {
+        try {
+        	List<AreaDto> siList = tripService.selectAllSi();
+
+            return new ResponseEntity<>(siList, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("스크롤 여행지 목록 조회 중 에러 발생: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/list-gugun")
+    public ResponseEntity<List<AreaDto>> getGuGun(@RequestParam int sidoCode) {
+    	  try {
+    		  System.out.println("sidoCode is " + sidoCode);
+          	List<AreaDto> gugunList = tripService.selectGuGun(sidoCode);
+          	System.out.println(gugunList);
+              return new ResponseEntity<>(gugunList, HttpStatus.OK);
+          } catch (Exception e) {
+              log.error("스크롤 여행지 목록 조회 중 에러 발생: {}", e.getMessage());
+              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+    }
+    
 }

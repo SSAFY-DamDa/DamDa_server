@@ -88,4 +88,10 @@
   	WHERE content_id = #{contentId}
   </select>
 
+  <select id="selectGuGun" resultMap="area">
+    SELECT *
+    FROM guguns
+    WHERE sido_code = #{param1}
+  </select>
+
 </mapper>
