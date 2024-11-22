@@ -81,5 +81,12 @@
     SELECT COUNT(*)
     FROM attractions
   </select>
+  
+  <select id="selectGuGun" resultMap="area">
+    SELECT *
+    FROM guguns
+    WHERE sido_code = #{param1}
+    
+  </select>
 
 </mapper>
