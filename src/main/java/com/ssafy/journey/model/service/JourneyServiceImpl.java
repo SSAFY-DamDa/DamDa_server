@@ -18,12 +18,7 @@ public class JourneyServiceImpl implements JourneyService {
     @Override
     public void registerJourney(JourneyDto journeyDto) {
         journeyMapper.insertJourney(journeyDto);
-        if (journeyDto.getTripList() != null) {
-            for (JourneyRouteDto route : journeyDto.getTripList()) {
-                route.setJourneyId(journeyDto.getId());
-                journeyMapper.insertJourneyRoute(route);
-            }
-        }
+        
     }
 
     @Override
@@ -42,7 +37,7 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
-    public JourneyDto getJourneyById(int id) {
+    public List<JourneyDto> getJourneyById(String id) {
         return journeyMapper.selectJourneyById(id);
     }
 }

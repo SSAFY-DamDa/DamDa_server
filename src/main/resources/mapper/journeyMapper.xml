@@ -3,16 +3,18 @@
 <mapper namespace="com.ssafy.journey.model.mapper.JourneyMapper">
 
     <resultMap id="journeyResultMap" type="com.ssafy.journey.model.JourneyDto">
-        <id property="id" column="id" />
-        <result property="userId" column="user_id" />
-        <result property="title" column="title" />
-        <result property="startDate" column="start_date" />
-        <result property="endDate" column="end_date" />
-        <result property="personnel" column="personnel" />
-        <result property="color" column="color" />
-        <result property="contentTypeId" column="content_type_id" />
-        <result property="sidoCode" column="sido_code" />
-        <result property="gugunCode" column="gugun_code" />
+        <result column="journey_id" property="journeyId" />
+        <result column="title" property="title" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="personnel" property="personnel" />
+        <result column="sido_name" property="sidoName" />
+        <result column="gugun_name" property="gugunName" />
+        <result column="attraction_title" property="attractionTitle" />
+        <result column="attraction_address" property="attractionAddress" />        
+        <result column="day" property="day" />
+        <result column="order_in_day" property="orderInDay" />
+        <result column="color" property="color" />
     </resultMap>
 
     <resultMap id="journeyRouteResultMap" type="com.ssafy.journey.model.JourneyRouteDto">
@@ -44,12 +46,20 @@
         DELETE FROM journeys WHERE id = #{id}
     </delete>
 
-    <select id="selectJourneyList" resultType="com.ssafy.journey.model.JourneyDto">
-        SELECT * FROM journeys
+    <select id="selectJourneyList" resultMap="journeyResultMap">
+        SELECT * from journeys
     </select>
 
-    <select id="selectJourneyById" parameterType="int" resultType="com.ssafy.journey.model.JourneyDto">
-        SELECT * FROM journeys WHERE id = #{id}
+    <select id="selectJourneyById" parameterType="String" resultMap="journeyResultMap">
+        SELECT j.id AS journey_id, j.title, j.start_date, j.end_date, j.personnel, s.sido_name, g.gugun_name, a.title AS attraction_title, a.addr1 AS attraction_address, jr.day, jr.order_in_day
+		FROM journeys j
+		JOIN member_journey mj ON j.id = mj.journey_id
+		JOIN journey_routes jr ON j.id = jr.journey_id
+		JOIN attractions a ON jr.content_id = a.content_id
+		JOIN sidos s ON j.sido_code = s.sido_code
+		JOIN guguns g ON j.gugun_code = g.gugun_code
+		WHERE mj.user_id = #{id}
+		ORDER BY j.id, jr.day, jr.order_in_day;
     </select>
 
 </mapper>
