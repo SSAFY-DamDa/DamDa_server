@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.member.model.mapper.MemberMapper">
+
+  <!-- ResultMap for MemberDto -->
+  <resultMap id="member" type="memberDto">
+    <result column="user_id" property="userId" />
+    <result column="user_name" property="userName" />
+    <result column="user_password" property="userPwd" />
+    <result column="email_id" property="emailId" />
+    <result column="email_domain" property="emailDomain" />
+    <result column="join_date" property="joinDate" />
+    <result column="user_status" property="status" />
+    <result column="token" property="refreshToken" />
+  </resultMap>
+
+  <!-- Check if user ID exists -->
+  <select id="idCheck" parameterType="string" resultType="int">
+    SELECT COUNT(user_id)
+    FROM members
+    WHERE user_id = #{userId}
+  </select>
+
+  <!-- Join a new member -->
+  <insert id="joinMember" parameterType="memberDto">
+    INSERT INTO members (user_name, user_id, user_password, email_id, email_domain, join_date)
+    VALUES (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, NOW())
+  </insert>
+
+  <!-- Update existing member status to active -->
+  <update id="updateMemberStatus" parameterType="memberDto">
+    UPDATE members
+    SET user_status = 1, user_password = #{userPwd}, user_name = #{userName}, email_id = #{emailId}, email_domain = #{emailDomain}
+    WHERE user_id = #{userId}
+  </update>
+
+  <!-- Login member -->
+  <select id="loginMember" parameterType="map" resultMap="member">
+    SELECT user_id, user_name, user_status, user_password, email_id, email_domain, join_date
+    FROM members
+    WHERE user_id = #{userId} AND user_password = #{userPwd}
+  </select>
+
+  <!-- Select a user by ID -->
+  <select id="selectUser" parameterType="string" resultMap="member">
+    SELECT *
+    FROM members
+    WHERE user_id = #{userId}
+  </select>
+
+  <!-- Modify member information -->
+  <update id="modifyInfo" parameterType="memberDto">
+    UPDATE members
+    SET user_password = #{userPwd}, user_name = #{userName}, email_id = #{emailId}, email_domain = #{emailDomain}
+    WHERE user_id = #{userId}
+  </update>
+
+  <!-- View member information -->
+  <select id="viewInfo" parameterType="map" resultMap="member">
+    SELECT *
+    FROM members
+    WHERE user_id = #{userId} AND user_password = #{userPwd}
+  </select>
+
+  <!-- Find user password -->
+  <select id="findPWD" parameterType="memberDto" resultType="string">
+    SELECT user_password
+    FROM members
+    WHERE user_id = #{userId} and email_id = #{emailId} and email_domain = #{emailDomain}
+  </select>
+  
+  <!-- Reset user password -->
+  <update id="resetPWD" parameterType="map">
+  	UPDATE members
+  	SET user_password = #{newPwd}
+  	WHERE user_id = #{userId}
+  </update>
+
+  <!-- Withdraw user -->
+  <update id="withdrawUser" parameterType="memberDto">
+    UPDATE members
+    SET user_status = 0
+    WHERE user_id = #{userId} AND user_password = #{userPwd}
+  </update>
+
+  <!-- Check user status -->
+  <select id="checkUserStatus" parameterType="string" resultType="int">
+    SELECT user_status
+    FROM members
+    WHERE user_id = #{userId}
+  </select>
+  
+  <!-- JWT -->
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where user_id = #{userId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where user_id = #{userId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+
+</mapper>

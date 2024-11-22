@@ -39,4 +39,10 @@ public class JourneyServiceImpl implements JourneyService {
         }
         return journeyDto;
     }
+
+	@Override
+	public List<JourneyDto> selectJourneyByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return journeyMapper.selectJourneyByUserId(userId);
+	}
 }

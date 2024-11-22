@@ -7,7 +7,7 @@
 
     <!-- ResultMap for JourneyDto -->
     <resultMap id="JourneyResultMap" type="com.ssafy.journey.model.JourneyDto">
-        <id property="id" column="id" />
+        <result property="id" column="id" />
         <result property="title" column="title" />
         <result property="startDate" column="start_date" />
         <result property="endDate" column="end_date" />
@@ -37,6 +37,19 @@
     <select id="selectJourneyById" parameterType="int" resultMap="JourneyResultMap">
         SELECT * FROM journeys
         WHERE id = #{id}
+    </select>
+    
+    <select id="selectJourneyByUserId" parameterType="string" resultMap="JourneyResultMap">
+         SELECT 
+            j.id AS id,
+            j.title AS title,
+            j.start_date AS start_date,
+            j.end_date AS end_date,
+            j.personnel AS personnel,
+            j.color AS color
+        FROM member_journey mj
+        LEFT JOIN journeys j ON mj.journey_id = j.id
+        WHERE mj.user_id = #{userId}
     </select>
 
 </mapper>

@@ -82,4 +82,16 @@ public class JourneyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> getUserJourney(@RequestParam String userId) {
+    	try {
+    		List<JourneyDto> selectJourneyByUserId = journeyService.selectJourneyByUserId(userId);
+    		Map<String, Object> dataMap = new HashMap<>();
+    		dataMap.put("journey", selectJourneyByUserId);
+    		return new ResponseEntity<>(dataMap, HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 }
