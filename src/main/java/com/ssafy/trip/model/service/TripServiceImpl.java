@@ -48,6 +48,6 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException {
-		return tripMapper.getGugun(sidoCode);
+		return tripMapper.selectGuGun(sidoCode);
 	}
 }

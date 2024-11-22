@@ -82,10 +82,10 @@
     FROM attractions
   </select>
   
-  <select id="getGugun" parameterType="int" resultMap="area">
+  <select id="selectGuGun" resultMap="area">
     SELECT *
     FROM guguns
-    WHERE sido_code = #{sideCode}
+    WHERE sido_code = #{param1}
     
   </select>
 
