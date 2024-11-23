@@ -35,7 +35,7 @@ public class FAQController {
 	private FAQService faqService;
 	
 	@GetMapping("/list")
-	public ResponseEntity<Map<String, Object>> listFAQ(@RequestParam Map<String, String> map) {
+	public ResponseEntity<Map<String, Object>> listFAQ() {
 		try {
 			List<FAQDto> faqList = faqService.listArticle();
 			Map<String, Object> dataMap = new HashMap<>();
@@ -49,7 +49,6 @@ public class FAQController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<Map<String, Object>> registerFAQ(@RequestBody FAQDto faqDto) {
-		System.out.println("fd: " + faqDto);
 		try {
 			faqService.registerArticle(faqDto);
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -85,7 +84,6 @@ public class FAQController {
 	
 	@PutMapping("/modify/{articleNo}")
 	public ResponseEntity<Map<String, Object>> modifyFAQ(@RequestBody FAQDto faqDto, @PathVariable int articleNo) {
-		System.out.println("modi: " + faqDto);
 		try {
 			faqService.modifyArticle(faqDto);
 			return new ResponseEntity<>(HttpStatus.OK);
