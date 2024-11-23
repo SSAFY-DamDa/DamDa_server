@@ -34,7 +34,7 @@ public class TripController {
 	public ResponseEntity<Map<String, Object>> getFirstList(@RequestParam int pgno) {
 		try {
 			int sizePerPage = 10;
-			int offset = pgno - 1;
+			int offset = pgno;
 			int totalCount = tripService.getTotalCount();
 			if (offset <= 0)
 				offset = 1;
@@ -70,7 +70,7 @@ public class TripController {
 			tripDto.setArea_code(areaCode);
 			tripDto.setContent_type_id(contentTypeId);
 
-			int offset = (pgno - 1);
+			int offset = pgno;
 			if (offset <= 0)
 				offset = 1;
 

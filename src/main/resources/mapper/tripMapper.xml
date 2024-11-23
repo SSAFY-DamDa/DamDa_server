@@ -59,7 +59,6 @@
     <if test="tripDto.title != null and tripDto.title != ''">
       AND title LIKE CONCAT('%', #{tripDto.title}, '%')
     </if>
-    ORDER BY title
     LIMIT #{offset}, #{totalCount}
   </select>
   

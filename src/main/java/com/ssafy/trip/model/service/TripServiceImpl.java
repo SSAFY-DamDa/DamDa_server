@@ -20,7 +20,6 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public List<TripDto> searchListAll(Map<String, Object> map) throws SQLException {
 		int offset = (int) map.get("offset") - 1;
-		System.out.println("service offset:" + offset);
 		int totalCount = (int) map.get("totalCount");
 		map.replace("offset", offset * totalCount);
 		return tripMapper.searchListAll(map);
