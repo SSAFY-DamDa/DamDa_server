@@ -96,16 +96,16 @@ public class TripController {
 	}
 
 	@GetMapping("/search-ai")
-	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int contentTypeId) {
-		System.out.println("ac: " + areaCode + " cti: " + contentTypeId);
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int gugunCode) {
+		System.out.println("ac: " + areaCode + " gc : " + gugunCode );
 		try {
 			TripDto tripDto = new TripDto();
 
 			areaCode = areaCode == 0 ? -1 : areaCode;
-			contentTypeId = contentTypeId == 0 ? -1 : contentTypeId;
+			gugunCode = gugunCode == -1 ? -1 : gugunCode;
 
 			tripDto.setArea_code(areaCode);
-			tripDto.setContent_type_id(contentTypeId);
+			tripDto.setSi_gun_gu_code(gugunCode);
 
 			List<TripDto> list = tripService.searchAI(tripDto);
 

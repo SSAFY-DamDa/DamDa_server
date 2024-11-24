@@ -69,10 +69,10 @@
     <if test="area_code != -1">
       AND area_code = #{area_code}
     </if>
-    <if test="content_type_id != -1">
-      AND content_type_id = #{content_type_id}
+    <if test="si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{si_gun_gu_code}
     </if>
-    ORDER BY title
+    ORDER BY first_image1 DESC
     LIMIT 50
   </select>
 
