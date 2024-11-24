@@ -83,10 +83,10 @@
   </select>
 
   <!-- Select all attractions with pagination -->
-  <select id="selectAll" resultMap="trip">
+  <select id="selectAll" parameterType="map" resultMap="trip">
     SELECT *
     FROM attractions
-    LIMIT #{param1}, #{param2}
+    LIMIT #{offset}, #{totalCount}
   </select>
 
   <!-- Get total count of attractions -->

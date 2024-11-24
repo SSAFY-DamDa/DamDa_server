@@ -14,7 +14,7 @@ public interface TripMapper {
 
 	public List<AreaDto> selectAllSi() throws SQLException;
 
-	public List<TripDto> selectAll(int pgNo, int sizePerPage) throws SQLException;
+	public List<TripDto> selectAll(Map<String, Object> map) throws SQLException;
 
 	public int getTotalCount() throws SQLException;
 

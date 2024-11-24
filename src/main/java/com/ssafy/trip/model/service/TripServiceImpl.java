@@ -1,6 +1,7 @@
 package com.ssafy.trip.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,13 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public List<TripDto> selectAll(int pgNo, int sizePerPage) throws SQLException {
-		return tripMapper.selectAll(pgNo, sizePerPage);
+		System.out.println("service pgNo: " +pgNo + " sizePerPage: " + sizePerPage);
+		Map<String, Object> map = new HashMap<>();
+		int offset = pgNo- 1;
+		int totalCount = sizePerPage;
+		map.put("offset", offset * totalCount);
+		map.put("totalCount", sizePerPage);
+		return tripMapper.selectAll(map);
 	}
 
 	@Override

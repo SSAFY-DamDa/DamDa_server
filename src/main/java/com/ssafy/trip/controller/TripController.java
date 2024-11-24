@@ -33,6 +33,7 @@ public class TripController {
 	@GetMapping("/list")
 	public ResponseEntity<Map<String, Object>> getFirstList(@RequestParam int pgno) {
 		try {
+			System.out.println("pgno: " + pgno);
 			int sizePerPage = 10;
 			int offset = pgno;
 			int totalCount = tripService.getTotalCount();
