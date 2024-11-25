@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.accessibility.mapper.AccessibilityMapper">
+
+    <insert id="insertAccessibility">
+        INSERT INTO content_accessibility (content_id, parking, route, public_transport, ticket_office, promotion, wheelchair, exit_info, elevator, restroom, auditorium, room, handicap_etc, braile_block, help_dog, guide_human, audio_guide, big_print, braile_promotion, guide_system, blind_handicap_etc, sign_guide, video_guide, hearing_room, hearing_handicap_etc, stroller, lactation_room, baby_spare_chair, infants_family_etc)
+        VALUES (#{contentId}, #{parking}, #{route}, #{publicTransport}, #{ticketOffice}, #{promotion}, #{wheelchair}, #{exit}, #{elevator}, #{restroom}, #{auditorium}, #{room}, #{handicapEtc}, #{braileBlock}, #{helpDog}, #{guideHuman}, #{audioGuide}, #{bigPrint}, #{brailePromotion}, #{guideSystem}, #{blindHandicapEtc}, #{signGuide}, #{videoGuide}, #{hearingRoom}, #{hearingHandicapEtc}, #{stroller}, #{lactationRoom}, #{babySpareChair}, #{infantsFamilyEtc});
+    </insert>
+
+    <select id="selectAllAccessibility" resultType="AccessibilityDto">
+        SELECT * FROM content_accessibility;
+    </select>
+
+</mapper>
