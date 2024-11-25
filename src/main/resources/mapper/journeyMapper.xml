@@ -13,6 +13,7 @@
         <result property="endDate" column="end_date" />
         <result property="personnel" column="personnel" />
         <result property="color" column="color" />
+        <result property="ai" column="ai" />
     </resultMap>
     
     <resultMap id="JourneyRouteMap" type="JourneyRouteDto">
@@ -24,8 +25,8 @@
 
     <!-- Insert Journey -->
     <insert id="insertJourney" parameterType="com.ssafy.journey.model.JourneyDto" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO journeys (title, start_date, end_date, personnel, color)
-        VALUES (#{title}, #{startDate}, #{endDate}, #{personnel}, #{color})
+        INSERT INTO journeys (title, start_date, end_date, personnel, color, ai)
+        VALUES (#{title}, #{startDate}, #{endDate}, #{personnel}, #{color}, #{ai})
     </insert>
 
     <!-- Insert Journey Route -->
@@ -54,6 +55,7 @@
             j.end_date AS end_date,
             j.personnel AS personnel,
             j.color AS color
+            j.ai AS ai
         FROM member_journey mj
         LEFT JOIN journeys j ON mj.journey_id = j.id
         WHERE mj.user_id = #{userId}
