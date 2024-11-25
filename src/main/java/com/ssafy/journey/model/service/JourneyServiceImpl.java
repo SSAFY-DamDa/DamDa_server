@@ -78,4 +78,20 @@ public class JourneyServiceImpl implements JourneyService {
 
         return journeyDetail;
 	}
+	
+	@Override
+    public void deleteJourney(int journeyId) {
+        // 1. journey_routes 삭제
+        journeyMapper.deleteJourneyRoutes(journeyId);
+
+        // 2. journey_accessibility 삭제
+        journeyMapper.deleteJourneyAccessibility(journeyId);
+
+        // 3. member_journey 삭제
+        journeyMapper.deleteMemberJourney(journeyId);
+
+        // 4. journeys 삭제
+        journeyMapper.deleteJourney(journeyId);
+    }
+
 }

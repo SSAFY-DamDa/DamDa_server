@@ -67,5 +67,25 @@
 	    WHERE journey_id = #{journeyId}
 	    ORDER BY day, order_in_day;
 	</select>
+	
+    <delete id="deleteJourneyRoutes" parameterType="int">
+        DELETE FROM journey_routes
+        WHERE journey_id = #{journeyId}
+    </delete>
+
+    <delete id="deleteJourneyAccessibility" parameterType="int">
+        DELETE FROM journey_accessibility
+        WHERE journey_id = #{journeyId}
+    </delete>
+
+    <delete id="deleteMemberJourney" parameterType="int">
+        DELETE FROM member_journey
+        WHERE journey_id = #{journeyId}
+    </delete>
+
+    <delete id="deleteJourney" parameterType="int">
+        DELETE FROM journeys
+        WHERE id = #{journeyId}
+    </delete>
 
 </mapper>
