@@ -73,7 +73,7 @@
       AND si_gun_gu_code = #{si_gun_gu_code}
     </if>
     ORDER BY first_image1 DESC
-    LIMIT 50
+    LIMIT 80
   </select>
 
   <!-- Select all areas -->
