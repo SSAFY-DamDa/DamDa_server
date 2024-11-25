@@ -13,6 +13,8 @@ public class JourneyDto {
     private String endDate;
     private int personnel;
     private String color;
+    private boolean ai;
+    
     // Getters and Setters
     public int getId() {
         return id;
@@ -62,9 +64,17 @@ public class JourneyDto {
         this.color = color;
     }
 
-    @Override
+    public boolean isAi() {
+		return ai;
+	}
+
+	public void setAi(boolean ai) {
+		this.ai = ai;
+	}
+
+	@Override
     public String toString() {
         return "JourneyDto [id=" + id + ", title=" + title +  ", startDate=" + startDate + ", endDate=" + endDate
-                + ", personnel=" + personnel + ", color=" + color +  "]";
+                + ", personnel=" + personnel + ", color=" + color + ", ai=" + ai +  "]";
     }
 }

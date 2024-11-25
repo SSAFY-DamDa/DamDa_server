@@ -25,7 +25,7 @@ public class JourneyController {
     public ResponseEntity<Map<String, Integer>> registerJourney(@RequestBody JourneyDto journeyDto, @RequestParam String userId) {
     	Map<String, Integer> resultMap = new HashMap<>();
         try {
-            System.out.println(journeyDto);
+            System.out.println("register journey" + journeyDto);
             // 1. 여행 정보 등록 후 생성된 journeyId 반환
             int journeyId = journeyService.registerJourney(journeyDto);
             
@@ -85,6 +85,7 @@ public class JourneyController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> getUserJourney(@RequestParam String userId) {
     	try {
+    		System.out.println("userId " + userId);
     		List<JourneyDto> selectJourneyByUserId = journeyService.selectJourneyByUserId(userId);
     		Map<String, Object> dataMap = new HashMap<>();
     		dataMap.put("journey", selectJourneyByUserId);
