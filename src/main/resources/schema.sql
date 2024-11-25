@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `end_date` DATE NOT NULL,
   `personnel` INT NOT NULL,
   `color` varchar(100) NOT NULL,
+  `ai` boolean NOT NULL default false,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
