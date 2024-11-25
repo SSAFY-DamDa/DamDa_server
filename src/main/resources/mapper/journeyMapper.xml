@@ -54,7 +54,7 @@
             j.start_date AS start_date,
             j.end_date AS end_date,
             j.personnel AS personnel,
-            j.color AS color
+            j.color AS color,
             j.ai AS ai
         FROM member_journey mj
         LEFT JOIN journeys j ON mj.journey_id = j.id
