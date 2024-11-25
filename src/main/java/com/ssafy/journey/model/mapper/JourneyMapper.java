@@ -4,6 +4,7 @@ package com.ssafy.journey.model.mapper;
 
 import com.ssafy.journey.model.JourneyDto;
 import com.ssafy.journey.model.JourneyRouteDto;
+import com.ssafy.journey.model.ReviewDto;
 import com.ssafy.trip.model.TripDto;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,5 @@ public interface JourneyMapper {
     void deleteJourneyAccessibility(int journeyId);
     void deleteMemberJourney(int journeyId);
     void deleteJourney(int journeyId);
+    void registerReview(ReviewDto reviewDto);
 }

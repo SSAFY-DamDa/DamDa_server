@@ -196,6 +196,22 @@ CREATE TABLE IF NOT EXISTS `journey_accessibility` (
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
 ) ENGINE=InnoDB;
 
+-- -----------------------------------------------------
+-- Table `dbdamda`.`reviews`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `dbdamda`.`reviews` ;
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `journey_id` INT NOT NULL,
+  `user_id` varchar(16) NOT NULL,
+  `ratings` INT NOT NULL,
+  `comment` varchar(256) NOT NULL,
+  `register_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) ,
+  FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
+) ENGINE=InnoDB;
+
 commit;
 
 SET SQL_MODE=@OLD_SQL_MODE;

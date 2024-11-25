@@ -2,6 +2,7 @@ package com.ssafy.journey.controller;
 
 import com.ssafy.journey.model.JourneyDto;
 import com.ssafy.journey.model.JourneyRouteDto;
+import com.ssafy.journey.model.ReviewDto;
 import com.ssafy.journey.model.service.JourneyService;
 import com.ssafy.trip.model.TripDto;
 
@@ -111,4 +112,20 @@ public class JourneyController {
 		journeyService.deleteJourney(journeyid);
 		return ResponseEntity.ok("Journey deleted successfully.");
 	}
+	
+	@PostMapping("/review")
+    public ResponseEntity<Map<String, String>> registerReview(@RequestBody ReviewDto reviewDto) {
+    	Map<String, String> resultMap = new HashMap<>();
+        try {
+            System.out.println("register review" + reviewDto);
+         
+            journeyService.registerReview(reviewDto);
+            
+            resultMap.put("msg", "review 등록 성공");
+      
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
