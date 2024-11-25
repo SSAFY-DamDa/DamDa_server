@@ -29,7 +29,7 @@
 		<result column="user_id" property="userId" />
 		<result column="ratings" property="ratings" />
 		<result column="comment" property="comment" />
-		<result column="registerTime" property="register_time" />
+		<result column="register_time" property="registerTime" />
 	</resultMap>
 
 	<!-- Insert Journey -->
@@ -108,6 +108,10 @@
 		INSERT INTO reviews (journey_id, user_id, ratings, comment)
 		VALUES (#{journeyId}, #{userId}, #{ratings}, #{comment});
 	</insert>
+	
+	<select id="selectReviewAll" resultMap="ReviewResultMap">
+		SELECT * FROM reviews
+	</select>
 
 
 </mapper>

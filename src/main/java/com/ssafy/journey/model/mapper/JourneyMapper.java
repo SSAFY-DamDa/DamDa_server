@@ -25,4 +25,5 @@ public interface JourneyMapper {
     void deleteMemberJourney(int journeyId);
     void deleteJourney(int journeyId);
     void registerReview(ReviewDto reviewDto);
+    List<ReviewDto> selectReviewAll();
 }

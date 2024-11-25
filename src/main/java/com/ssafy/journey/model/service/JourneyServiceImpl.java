@@ -100,4 +100,9 @@ public class JourneyServiceImpl implements JourneyService {
 		journeyMapper.registerReview(reviewDto);
 	}
 
+	@Override
+	public List<ReviewDto> selectReviewAll() {
+		return journeyMapper.selectReviewAll();
+	}
+
 }

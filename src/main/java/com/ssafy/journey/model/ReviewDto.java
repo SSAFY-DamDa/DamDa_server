@@ -1,5 +1,7 @@
 package com.ssafy.journey.model;
 
+import java.util.Date;
+
 public class ReviewDto {
 	private int id;
 	private int journeyId;

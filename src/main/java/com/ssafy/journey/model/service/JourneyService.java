@@ -18,4 +18,5 @@ public interface JourneyService {
     Map<String, List<TripDto>> getJourneyDetail(int journeyId) throws Exception;
     void deleteJourney(int journeyid);
     void registerReview(ReviewDto reviewDto);
+    List<ReviewDto> selectReviewAll();
 }
