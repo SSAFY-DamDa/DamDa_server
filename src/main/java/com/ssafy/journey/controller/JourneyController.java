@@ -105,4 +105,10 @@ public class JourneyController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+	@DeleteMapping("/{journeyid}")
+	public ResponseEntity<String> deleteJourney(@PathVariable int journeyid) {
+		journeyService.deleteJourney(journeyid);
+		return ResponseEntity.ok("Journey deleted successfully.");
+	}
 }
