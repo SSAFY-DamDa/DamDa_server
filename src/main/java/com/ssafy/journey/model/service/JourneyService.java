@@ -3,6 +3,7 @@ package com.ssafy.journey.model.service;
 
 import com.ssafy.journey.model.JourneyDto;
 import com.ssafy.journey.model.JourneyRouteDto;
+import com.ssafy.journey.model.ReviewDto;
 import com.ssafy.trip.model.TripDto;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface JourneyService {
     List<JourneyDto> selectJourneyByUserId(String userId);
     Map<String, List<TripDto>> getJourneyDetail(int journeyId) throws Exception;
     void deleteJourney(int journeyid);
+    void registerReview(ReviewDto reviewDto);
+    List<ReviewDto> selectReviewAll();
 }

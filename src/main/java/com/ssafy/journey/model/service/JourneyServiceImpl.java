@@ -3,6 +3,7 @@ package com.ssafy.journey.model.service;
 
 import com.ssafy.journey.model.JourneyDto;
 import com.ssafy.journey.model.JourneyRouteDto;
+import com.ssafy.journey.model.ReviewDto;
 import com.ssafy.journey.model.mapper.JourneyMapper;
 import com.ssafy.trip.model.TripDto;
 import com.ssafy.trip.model.mapper.TripMapper;
@@ -93,5 +94,15 @@ public class JourneyServiceImpl implements JourneyService {
         // 4. journeys 삭제
         journeyMapper.deleteJourney(journeyId);
     }
+
+	@Override
+	public void registerReview(ReviewDto reviewDto) {
+		journeyMapper.registerReview(reviewDto);
+	}
+
+	@Override
+	public List<ReviewDto> selectReviewAll() {
+		return journeyMapper.selectReviewAll();
+	}
 
 }
