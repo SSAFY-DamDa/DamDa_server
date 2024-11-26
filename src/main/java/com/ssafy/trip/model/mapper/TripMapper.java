@@ -10,11 +10,19 @@ import com.ssafy.trip.model.TripDto;
 public interface TripMapper {
 	public List<TripDto> searchListAll(Map<String, Object> map) throws SQLException;
 
+	public List<TripDto> searchAI(TripDto tripDto) throws SQLException;
+
 	public List<AreaDto> selectAllSi() throws SQLException;
 
-	public List<TripDto> selectAll(int pgNo, int sizePerPage) throws SQLException;
+	public List<TripDto> selectAll(Map<String, Object> map) throws SQLException;
 
 	public int getTotalCount() throws SQLException;
 
 	int getSearchTotalCount(TripDto tripDto) throws SQLException;
+
+	public TripDto getAttractionsByContentId(int contentId);
+	
+	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException;
+	
+	public  List<AreaDto> getAutoComplete(String title) throws SQLException;
 }

@@ -14,6 +14,9 @@
     <result column="join_date" property="joinDate" />
     <result column="user_status" property="status" />
     <result column="token" property="refreshToken" />
+    <result column="birth_date" property="birthDate" />
+    <result column="phone_num" property="phoneNum" />
+    <result column="address" property="address" />
   </resultMap>
 
   <!-- Check if user ID exists -->
@@ -25,8 +28,8 @@
 
   <!-- Join a new member -->
   <insert id="joinMember" parameterType="memberDto">
-    INSERT INTO members (user_name, user_id, user_password, email_id, email_domain, join_date)
-    VALUES (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, NOW())
+    INSERT INTO members (user_name, user_id, user_password, email_id, email_domain, join_date, birth_date, phone_num, address)
+    VALUES (#{userName}, #{userId}, #{userPwd}, #{emailId}, #{emailDomain}, NOW(), #{birthDate}, #{phoneNum}, #{address})
   </insert>
 
   <!-- Update existing member status to active -->
@@ -53,7 +56,14 @@
   <!-- Modify member information -->
   <update id="modifyInfo" parameterType="memberDto">
     UPDATE members
-    SET user_password = #{userPwd}, user_name = #{userName}, email_id = #{emailId}, email_domain = #{emailDomain}
+    SET
+    	user_password = #{userPwd},
+    	user_name = #{userName},
+    	email_id = #{emailId},
+    	email_domain = #{emailDomain},
+    	birth_date = #{birthDate},
+    	phone_num = #{phoneNum},
+    	address = #{address}
     WHERE user_id = #{userId}
   </update>
 

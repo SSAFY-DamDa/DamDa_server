@@ -1,6 +1,7 @@
 package com.ssafy.trip.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +21,14 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public List<TripDto> searchListAll(Map<String, Object> map) throws SQLException {
 		int offset = (int) map.get("offset") - 1;
-		System.out.println("service offset:" + offset);
 		int totalCount = (int) map.get("totalCount");
 		map.replace("offset", offset * totalCount);
 		return tripMapper.searchListAll(map);
+	}
+	
+	@Override
+	public List<TripDto> searchAI(TripDto tripDto) throws SQLException {
+		return tripMapper.searchAI(tripDto);
 	}
 
 	@Override
@@ -38,11 +43,28 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	public List<TripDto> selectAll(int pgNo, int sizePerPage) throws SQLException {
-		return tripMapper.selectAll(pgNo, sizePerPage);
+		System.out.println("service pgNo: " +pgNo + " sizePerPage: " + sizePerPage);
+		Map<String, Object> map = new HashMap<>();
+		int offset = pgNo- 1;
+		int totalCount = sizePerPage;
+		map.put("offset", offset * totalCount);
+		map.put("totalCount", sizePerPage);
+		return tripMapper.selectAll(map);
 	}
 
 	@Override
 	public int getTotalCount() throws SQLException {
 		return tripMapper.getTotalCount();
 	}
+
+	@Override
+	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException {
+		return tripMapper.selectGuGun(sidoCode);
+	}
+
+	@Override
+	public List<AreaDto> getAutoComplete(String title) throws SQLException {
+		return tripMapper.getAutoComplete(title);
+	}
+
 }

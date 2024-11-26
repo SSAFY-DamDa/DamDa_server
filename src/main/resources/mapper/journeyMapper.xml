@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.journey.model.mapper.JourneyMapper">
+
+	<!-- ResultMap for JourneyDto -->
+	<resultMap id="JourneyResultMap" type="JourneyDto">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+		<result property="personnel" column="personnel" />
+		<result property="color" column="color" />
+		<result property="ai" column="ai" />
+	</resultMap>
+
+	<resultMap id="JourneyRouteMap" type="JourneyRouteDto">
+		<result column="journey_id" property="journeyId" />
+		<result column="day" property="day" />
+		<result column="order_in_day" property="orderInDay" />
+		<result column="content_id" property="contentId" />
+	</resultMap>
+
+	<resultMap id="ReviewResultMap" type="ReviewDto">
+		<result property="id" column="id" />
+		<result column="journey_id" property="journeyId" />
+		<result column="user_id" property="userId" />
+		<result column="ratings" property="ratings" />
+		<result column="comment" property="comment" />
+		<result column="register_time" property="registerTime" />
+	</resultMap>
+
+	<!-- Insert Journey -->
+	<insert id="insertJourney"
+		parameterType="com.ssafy.journey.model.JourneyDto"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO journeys (title, start_date, end_date, personnel, color, ai)
+		VALUES (#{title}, #{startDate}, #{endDate}, #{personnel}, #{color},
+		#{ai})
+	</insert>
+
+	<!-- Insert Journey Route -->
+	<insert id="insertJourneyRoute"
+		parameterType="com.ssafy.journey.model.JourneyRouteDto">
+		INSERT INTO journey_routes (journey_id, day, order_in_day, content_id)
+		VALUES (#{journeyId}, #{day}, #{orderInDay}, #{contentId})
+	</insert>
+
+	<!-- Insert Member Journey -->
+	<insert id="insertMemberJourney" parameterType="map">
+		INSERT INTO member_journey (user_id, journey_id)
+		VALUES (#{userId}, #{journeyId})
+	</insert>
+
+	<!-- Select Journey By ID -->
+	<select id="selectJourneyById" parameterType="int"
+		resultMap="JourneyResultMap">
+		SELECT * FROM journeys
+		WHERE id = #{id}
+	</select>
+
+	<select id="selectJourneyByUserId" parameterType="map"
+		resultMap="JourneyResultMap">
+		SELECT
+		j.id AS id,
+		j.title AS title,
+		j.start_date AS start_date,
+		j.end_date AS end_date,
+		j.personnel AS personnel,
+		j.color AS color,
+		j.ai AS ai
+		FROM member_journey mj
+		LEFT JOIN journeys j ON mj.journey_id = j.id
+		WHERE 1=1
+		AND mj.user_id = #{userId}
+		<if test="startDate != null and startDate != ''">
+			AND j.start_date LIKE CONCAT(#{startDate}, '%')
+		</if>
+	</select>
+
+	<select id="selectJourneyRoutesByJourneyId" parameterType="int"
+		resultMap="JourneyRouteMap">
+		SELECT journey_id, day, order_in_day, content_id
+		FROM journey_routes
+		WHERE journey_id = #{journeyId}
+		ORDER BY day, order_in_day;
+	</select>
+
+	<delete id="deleteJourneyRoutes" parameterType="int">
+		DELETE FROM journey_routes
+		WHERE journey_id = #{journeyId}
+	</delete>
+
+	<delete id="deleteMemberJourney" parameterType="int">
+		DELETE FROM member_journey
+		WHERE journey_id = #{journeyId}
+	</delete>
+
+	<delete id="deleteJourney" parameterType="int">
+		DELETE FROM journeys
+		WHERE id = #{journeyId}
+	</delete>
+
+	<insert id="registerReview" parameterType="com.ssafy.journey.model.ReviewDto">
+		INSERT INTO reviews (journey_id, user_id, ratings, comment)
+		VALUES (#{journeyId}, #{userId}, #{ratings}, #{comment});
+	</insert>
+	
+	<select id="selectReviewAll" resultMap="ReviewResultMap">
+		SELECT * FROM reviews
+	</select>
+
+
+</mapper>

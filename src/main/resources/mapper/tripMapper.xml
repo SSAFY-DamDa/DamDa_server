@@ -37,6 +37,9 @@
     <if test="area_code != -1">
       AND area_code = #{area_code}
     </if>
+     <if test="si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{si_gun_gu_code}
+    </if>
     <if test="content_type_id != -1">
       AND content_type_id = #{content_type_id}
     </if>
@@ -53,14 +56,30 @@
     <if test="tripDto.area_code != -1">
       AND area_code = #{tripDto.area_code}
     </if>
+    <if test="tripDto.si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{tripDto.si_gun_gu_code}
+    </if>
     <if test="tripDto.content_type_id != -1">
       AND content_type_id = #{tripDto.content_type_id}
     </if>
     <if test="tripDto.title != null and tripDto.title != ''">
       AND title LIKE CONCAT('%', #{tripDto.title}, '%')
     </if>
-    ORDER BY title
     LIMIT #{offset}, #{totalCount}
+  </select>
+  
+  <select id="searchAI" parameterType="tripDto" resultMap="trip">
+    SELECT *
+    FROM attractions
+    WHERE 1=1
+    <if test="area_code != -1">
+      AND area_code = #{area_code}
+    </if>
+    <if test="si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{si_gun_gu_code}
+    </if>
+    ORDER BY first_image1 DESC
+    LIMIT 80
   </select>
 
   <!-- Select all areas -->
@@ -70,16 +89,47 @@
   </select>
 
   <!-- Select all attractions with pagination -->
-  <select id="selectAll" resultMap="trip">
+  <select id="selectAll" parameterType="map" resultMap="trip">
     SELECT *
     FROM attractions
-    LIMIT #{param1}, #{param2}
+    LIMIT #{offset}, #{totalCount}
   </select>
 
   <!-- Get total count of attractions -->
   <select id="getTotalCount" resultType="int">
     SELECT COUNT(*)
     FROM attractions
+  </select>
+  
+  <select id="getAttractionsByContentId" parameterType="int" resultMap="trip">
+  	SELECT *
+  	FROM attractions
+  	WHERE content_id = #{contentId}
+  </select>
+
+  <select id="selectGuGun" resultMap="area">
+    SELECT *
+    FROM guguns
+    WHERE sido_code = #{param1}
+  </select>
+  
+  <select id="getAutoComplete" parameterType="string" resultMap="area">
+	  SELECT 
+    s.sido_code, 
+    s.sido_name, 
+    g.gugun_code, 
+    g.gugun_name
+FROM 
+    dbdamda.sidos s
+JOIN 
+    dbdamda.guguns g
+ON 
+    s.sido_code = g.sido_code
+WHERE 
+    s.sido_name LIKE CONCAT('%', #{title}, '%')
+    OR g.gugun_name LIKE CONCAT('%', #{title}, '%')
+ORDER BY 
+    s.sido_code, g.gugun_code;
   </select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.ssafy.member.model;
 
+import java.util.Date;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class MemberDto {
@@ -20,6 +22,12 @@ public class MemberDto {
 	private int status;
 	@Schema(description = "refreshToken", defaultValue = "")
 	private String refreshToken;
+	@Schema(description = "생년월일")
+	private Date birthDate;
+	@Schema(description = "핸드폰번호")
+	private String phoneNum;
+	@Schema(description = "주소")
+	private String address;
 
 	public int getStatus() {
 		return status;
@@ -76,7 +84,7 @@ public class MemberDto {
 	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
-	
+
 	public String getRefreshToken() {
 		return refreshToken;
 	}
@@ -85,12 +93,36 @@ public class MemberDto {
 		this.refreshToken = refreshToken;
 	}
 
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", emailId="
 				+ emailId + ", emailDomain=" + emailDomain + ", joinDate=" + joinDate + ", status=" + status
-				+ ", refreshToken=" + refreshToken + "]";
+				+ ", refreshToken=" + refreshToken + ", birthDate=" + birthDate + ", phoneNum=" + phoneNum
+				+ ", address=" + address + "]";
 	}
 
-	
 }

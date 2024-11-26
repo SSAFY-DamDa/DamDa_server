@@ -216,10 +216,8 @@ public class MemberController {
 	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String id) {
 		try {
 			MemberDto member = memberService.selectUser(id);
-
 			String decryptPWD = AesUtil.decrypt(member.getUserPwd());
 			member.setUserPwd(decryptPWD);
-
 			return new ResponseEntity<>(member, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("사용자 정보 불러오는 중 오류 발생: {}", e.getMessage());

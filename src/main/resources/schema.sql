@@ -119,10 +119,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-insert into `dbdamda`.`members` (user_id, user_name, user_password, email_id, email_domain, join_date)
-values 	('ssafy', '김싸피', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'ssafy', 'ssafy.com', now()), 
-		('admin', '관리자', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'admin', 'google.com', now());
-        
 -- -----------------------------------------------------
 -- Table `dbdamda`.`faqs`
 -- -----------------------------------------------------
@@ -138,8 +134,6 @@ CREATE TABLE `faqs` (
   KEY `faq_to_members_user_id_fk` (`user_id`),
   CONSTRAINT `faq_to_members_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `faqs` VALUES (1,'admin','테스트용 제목','테스트용 내용입니당', '2023-10-17 08:06:05');
-INSERT INTO `faqs` VALUES (2,'admin','여행 검색은 어떻게 하나요?','여행 검색은 메인 화면에서 가운데 지도로 이동하기 버튼을 누를 수 있습니다. 또는 여행 계획 플랜에서 버튼을 클릭하면 여행 계획 구성 페이지로 넘어 갈 수 있습니다. 이곳에서 여행하고 싶은 다양한 장소를 검색할 수 있습니다.', '2024-11-16 09:06:05');
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`journeys`
@@ -151,13 +145,9 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `personnel` INT NOT NULL,
-  `content_type_id` INT NOT NULL,
-  `sido_code` INT NOT NULL, 
-  `gugun_code` INT NOT NULL,
   `color` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`sido_code`) REFERENCES `sidos` (`sido_code`),
-  FOREIGN KEY (`gugun_code`) REFERENCES `guguns` (`gugun_code`)
+  `ai` boolean NOT NULL default false,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
@@ -180,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `journey_routes` (
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `dbdamda`.`member_journey` ;
 CREATE TABLE IF NOT EXISTS `member_journey` (
-`id` INT NOT NULL,
+`id` INT NOT NULL AUTO_INCREMENT,
   `journey_id` INT NOT NULL, 
   `user_id` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
@@ -189,21 +179,112 @@ CREATE TABLE IF NOT EXISTS `member_journey` (
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- Table `dbdamda`.`journey_accessibility`
+-- Table `dbdamda`.`reviews`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dbdamda`.`journey_accessibility` ;
-CREATE TABLE IF NOT EXISTS `journey_accessibility` (
-	`id` INT NOT NULL,
-  `journey_id` INT NOT NULL, 
-  `accessible_option` INT NOT NULL,
+DROP TABLE IF EXISTS `dbdamda`.`reviews` ;
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `journey_id` INT NOT NULL,
+  `user_id` varchar(16) NOT NULL,
+  `ratings` INT NOT NULL,
+  `comment` varchar(256) NOT NULL,
+  `register_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
+  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) ,
+  FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
 ) ENGINE=InnoDB;
 
-commit;
+-- -----------------------------------------------------
+-- Dummy data
+-- -----------------------------------------------------
+INSERT INTO `dbdamda`.`members` (user_id, user_name, user_password, email_id, email_domain, join_date)
+VALUES 	('ssafy', '김싸피', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'ssafy', 'ssafy.com', now()), 
+		('admin', '관리자', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'admin', 'google.com', now());
 
+INSERT INTO `dbdamda`.`faqs` 
+VALUES 
+	(1,'admin','여행 검색은 무엇인가요?','궁금한 장소를 빠르게 검색 가능한 기능입니다. 검색을 원하는 장소를 제목 혹은 지역명을 통해 검색 가능합니다. ', '2024-11-12 09:00:05'),
+    (2,'admin','AI 추천은 무엇인가요?','AI가 원하는 선호에 따라 여행 일정을 계획해주는 기능입니다.', '2024-11-12 09:06:05'),
+    (3,'admin','직접 계획은 무엇인가요?','직접 원하는 장소를 검색해 원하는 일정으로 여행을 계획할 수 있는 기능입니다. ', '2024-11-12 09:10:02'),
+     (4,'admin','여행 계획은 어떻게 확인하나요?','오른쪽 위 끝 본인의 아이디를 누르면 뜨는 팝업에서 나의 여정을 클릭해 확인 가능합니다.', '2024-11-13 14:10:42'),
+    (5,'admin','이전 여정은 어떻게 확인하나요?','마이페이지 > 이전 여정을 눌러 확인할 수 있습니다. ', '2024-11-13 14:15:29');
+    
+-- 여행 추가
+INSERT INTO `dbdamda`.`journeys` (title, start_date, end_date, personnel, color)
+VALUES 
+    -- ssafy의 여행
+    ('서울 랜드마크 투어', '2024-10-20', '2024-10-22', 1, '#FFA500'),
+    ('서울 자연 탐방', '2024-11-25', '2024-11-27', 1, '#00FF00'),
+    ('서울 역사 유적지 여행', '2024-12-10', '2024-12-12', 1, '#1E90FF'),
+
+    -- admin의 여행
+    ('서울 공원 투어', '2024-08-18', '2024-08-20', 1, '#FF6347'),
+    ('서울 종로 탐방', '2024-05-22', '2024-05-24', 1, '#FFD700'),
+    ('서울 강남 투어', '2024-12-03', '2024-12-05', 1, '#ADFF2F');
+
+-- 유저와 여행 연결
+INSERT INTO `dbdamda`.`member_journey` (user_id, journey_id)
+VALUES 
+    -- ssafy와 연결
+    ('ssafy', 1), -- 서울 랜드마크 투어
+    ('ssafy', 2), -- 서울 자연 탐방
+    ('ssafy', 3), -- 서울 역사 유적지 여행
+
+    -- admin과 연결
+    ('admin', 4), -- 서울 공원 투어
+    ('admin', 5), -- 서울 종로 탐방
+    ('admin', 6); -- 서울 강남 투어
+
+
+-- ssafy의 여행 경로
+INSERT INTO `dbdamda`.`journey_routes` (journey_id, day, order_in_day, content_id)
+VALUES 
+    -- 서울 랜드마크 투어 (Journey ID: 1)
+    (1, 1, 1, 2733967), (1, 1, 2, 2763807), -- 1일차
+    (1, 2, 1, 1116925), (1, 2, 2, 294439), -- 2일차
+    (1, 3, 1, 264570), (1, 3, 2, 2456536), -- 3일차
+
+    -- 서울 자연 탐방 (Journey ID: 2)
+    (2, 1, 1, 127377), (2, 1, 2, 128961), -- 1일차
+    (2, 2, 1, 809490), (2, 2, 2, 3043735), -- 2일차
+    (2, 3, 1, 2733968), (2, 3, 2, 2591792), -- 3일차
+
+    -- 서울 역사 유적지 여행 (Journey ID: 3)
+    (3, 1, 1, 126501), (3, 1, 2, 2733966), -- 1일차
+    (3, 2, 1, 2758868), (3, 2, 2, 1604652), -- 2일차
+    (3, 3, 1, 126508), (3, 3, 2, 294505), -- 3일차
+
+    -- admin의 여행 경로
+    -- 서울 공원 투어 (Journey ID: 4)
+    (4, 1, 1, 294439), (4, 1, 2, 3043735), -- 1일차
+    (4, 2, 1, 809490), (4, 2, 2, 264570), -- 2일차
+    (4, 3, 1, 2758868), (4, 3, 2, 128961), -- 3일차
+
+    -- 서울 종로 탐방 (Journey ID: 5)
+    (5, 1, 1, 2930839), (5, 1, 2, 2758868), -- 1일차
+    (5, 2, 1, 127377), (5, 2, 2, 2456536), -- 2일차
+    (5, 3, 1, 2733968), (5, 3, 2, 264570), -- 3일차
+
+    -- 서울 강남 투어 (Journey ID: 6)
+    (6, 1, 1, 2763807), (6, 1, 2, 1116925), -- 1일차
+    (6, 2, 1, 2733967), (6, 2, 2, 3043735), -- 2일차
+    (6, 3, 1, 1604652), (6, 3, 2, 127377); -- 3일차
+
+-- 리뷰 추가
+INSERT INTO `dbdamda`.`reviews` (id, journey_id, user_id, ratings, comment, register_time)
+VALUES 
+    -- ssafy의 여행
+    (1, 1, 'ssafy', 5, 'AI 너무 똑똑해요', '2024-11-12 09:00:05'),
+    (2, 1, 'ssafy', 4, '기능이 좋네요', '2024-11-13 12:00:05'),
+	(3, 1, 'ssafy', 3, '편하긴 해요', '2024-11-03 19:10:45'),
+	(4, 2, 'ssafy', 3, '나름 상세하네요', '2024-11-13 21:46:04'),
+	(5, 2, 'ssafy', 4, '세상 편해졌다', '2024-11-15 23:34:46'),
+    (6, 2, 'ssafy', 5, '취향 반영 너무 좋네요', '2024-11-26 09:30:23'),
+    (7, 3, 'ssafy', 4, '이용해볼만 합니다', '2024-11-19 14:00:05');
+
+
+commit;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
