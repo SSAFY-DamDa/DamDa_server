@@ -23,4 +23,6 @@ public interface TripMapper {
 	public TripDto getAttractionsByContentId(int contentId);
 	
 	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException;
+	
+	public  List<AreaDto> getAutoComplete(String title) throws SQLException;
 }
