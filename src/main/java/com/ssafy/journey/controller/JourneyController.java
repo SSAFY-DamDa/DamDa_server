@@ -144,8 +144,6 @@ public class JourneyController {
 	  public ResponseEntity<Map<String, Object>> getReviewAll() {
     	try {
     		List<ReviewDto> selectAllReviews = journeyService.selectReviewAll();
-    		
-    		System.out.println("reviewDto " + selectAllReviews);
     		Map<String, Object> dataMap = new HashMap<>();
     		dataMap.put("reviews", selectAllReviews);
     		return new ResponseEntity<>(dataMap, HttpStatus.OK);
