@@ -185,18 +185,6 @@ CREATE TABLE IF NOT EXISTS `member_journey` (
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- Table `dbdamda`.`journey_accessibility`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `dbdamda`.`journey_accessibility` ;
-CREATE TABLE IF NOT EXISTS `journey_accessibility` (
-	`id` INT NOT NULL,
-  `journey_id` INT NOT NULL, 
-  `accessible_option` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
-) ENGINE=InnoDB;
-
--- -----------------------------------------------------
 -- Table `dbdamda`.`reviews`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `dbdamda`.`reviews` ;
