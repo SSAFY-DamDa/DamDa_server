@@ -58,17 +58,20 @@ public class TripController {
 
 	@Operation(summary = "여행지 검색", description = "검색 조건에 맞는 여행지 목록을 조회하여 반환합니다.")
 	@GetMapping("/search")
-	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int contentTypeId,
+	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int gugunCode, @RequestParam int contentTypeId,
 			@RequestParam String title, @RequestParam int pgno) {
 		try {
+			
 			int sizePerPage = 10;
 			TripDto tripDto = new TripDto();
 
 			areaCode = areaCode == 0 ? -1 : areaCode;
+			gugunCode = gugunCode == 0 ? -1 : gugunCode;
 			contentTypeId = contentTypeId == 0 ? -1 : contentTypeId;
 
 			tripDto.setTitle(title);
 			tripDto.setArea_code(areaCode);
+			tripDto.setSi_gun_gu_code(gugunCode);
 			tripDto.setContent_type_id(contentTypeId);
 
 			int offset = pgno;
@@ -79,9 +82,15 @@ public class TripController {
 			map.put("tripDto", tripDto);
 			map.put("offset", offset);
 			map.put("totalCount", sizePerPage);
+			
+			System.out.println("search Map " + map);
 
 			List<TripDto> list = tripService.searchListAll(map);
+			
+			System.out.println("get list suc " + list);
+		 
 			int searchTotalCount = tripService.getSearchTotalCount(tripDto);
+			System.out.println("get totalcount suc " + searchTotalCount);
 
 			Map<String, Object> dataMap = new HashMap<>();
 			dataMap.put("tripList", list);
@@ -94,7 +103,7 @@ public class TripController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
 	@GetMapping("/search-ai")
 	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int gugunCode) {
 		System.out.println("ac: " + areaCode + " gc : " + gugunCode );
@@ -140,6 +149,22 @@ public class TripController {
 			return new ResponseEntity<>(gugunList, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("스크롤 여행지 목록 조회 중 에러 발생: {}", e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/autocomplete")
+	public ResponseEntity<Map<String, Object>> getAutoComplete(@RequestParam String title) {
+		try {
+			System.out.println("autocomplete " + title);
+			List<AreaDto> list = tripService.getAutoComplete(title);
+			
+			Map<String, Object> dataMap = new HashMap<>();
+			dataMap.put("autoComplete", list);
+
+			return new ResponseEntity<>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("여행지 검색 중 에러 발생: {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

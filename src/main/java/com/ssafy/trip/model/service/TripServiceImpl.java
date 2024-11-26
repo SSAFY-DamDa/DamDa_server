@@ -61,4 +61,10 @@ public class TripServiceImpl implements TripService {
 	public List<AreaDto> selectGuGun(int sidoCode) throws SQLException {
 		return tripMapper.selectGuGun(sidoCode);
 	}
+
+	@Override
+	public List<AreaDto> getAutoComplete(String title) throws SQLException {
+		return tripMapper.getAutoComplete(title);
+	}
+
 }
