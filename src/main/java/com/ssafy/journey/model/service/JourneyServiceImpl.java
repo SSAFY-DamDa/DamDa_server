@@ -97,9 +97,6 @@ public class JourneyServiceImpl implements JourneyService {
         // 1. journey_routes 삭제
         journeyMapper.deleteJourneyRoutes(journeyId);
 
-        // 2. journey_accessibility 삭제
-        journeyMapper.deleteJourneyAccessibility(journeyId);
-
         // 3. member_journey 삭제
         journeyMapper.deleteMemberJourney(journeyId);
 

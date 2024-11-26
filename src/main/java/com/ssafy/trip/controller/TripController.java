@@ -61,7 +61,7 @@ public class TripController {
 	public ResponseEntity<Map<String, Object>> search(@RequestParam int areaCode, @RequestParam int gugunCode, @RequestParam int contentTypeId,
 			@RequestParam String title, @RequestParam int pgno) {
 		try {
-			
+			System.out.println("search params: " + areaCode + " " + gugunCode + " " + contentTypeId + " " + title + " pgno: " + pgno);
 			int sizePerPage = 10;
 			TripDto tripDto = new TripDto();
 
@@ -69,7 +69,7 @@ public class TripController {
 			gugunCode = gugunCode == 0 ? -1 : gugunCode;
 			contentTypeId = contentTypeId == 0 ? -1 : contentTypeId;
 
-			tripDto.setTitle(title);
+			tripDto.setTitle(areaCode == -1 ? title : "");
 			tripDto.setArea_code(areaCode);
 			tripDto.setSi_gun_gu_code(gugunCode);
 			tripDto.setContent_type_id(contentTypeId);
