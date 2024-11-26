@@ -119,9 +119,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-insert into `dbdamda`.`members` (user_id, user_name, user_password, email_id, email_domain, join_date)
-values 	('ssafy', '김싸피', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'ssafy', 'ssafy.com', now()), 
-		('admin', '관리자', 'UxOcdW4QNwYyU3QSG/pT/Q==', 'admin', 'google.com', now());
         
 -- -----------------------------------------------------
 -- Table `dbdamda`.`faqs`
@@ -138,8 +135,6 @@ CREATE TABLE `faqs` (
   KEY `faq_to_members_user_id_fk` (`user_id`),
   CONSTRAINT `faq_to_members_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `faqs` VALUES (1,'admin','테스트용 제목','테스트용 내용입니당', '2023-10-17 08:06:05');
-INSERT INTO `faqs` VALUES (2,'admin','여행 검색은 어떻게 하나요?','여행 검색은 메인 화면에서 가운데 지도로 이동하기 버튼을 누를 수 있습니다. 또는 여행 계획 플랜에서 버튼을 클릭하면 여행 계획 구성 페이지로 넘어 갈 수 있습니다. 이곳에서 여행하고 싶은 다양한 장소를 검색할 수 있습니다.', '2024-11-16 09:06:05');
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`journeys`
@@ -152,20 +147,8 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `end_date` DATE NOT NULL,
   `personnel` INT NOT NULL,
   `color` varchar(100) NOT NULL,
-  `ai` boolean NOT NULL default false,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
-INSERT INTO `journeys` (title, start_date, end_date, personnel, color)
-VALUES 
-    -- ssafy의 여행
-    ('서울 랜드마크 투어', '2024-11-20', '2024-11-22', 1, '#FFA500'),
-    ('서울 자연 탐방', '2024-11-25', '2024-11-27', 1, '#00FF00'),
-    ('서울 역사 유적지 여행', '2024-11-30', '2024-12-02', 1, '#1E90FF'),
-
-    -- admin의 여행
-    ('서울 공원 투어', '2024-11-18', '2024-11-20', 1, '#FF6347'),
-    ('서울 종로 탐방', '2024-11-22', '2024-11-24', 1, '#FFD700'),
-    ('서울 강남 투어', '2024-11-28', '2024-11-30', 1, '#ADFF2F');
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`journey_routes`
@@ -181,38 +164,6 @@ CREATE TABLE IF NOT EXISTS `journey_routes` (
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) ,
   FOREIGN KEY (`content_id`) REFERENCES `attractions` (`content_id`)
 ) ENGINE=InnoDB;
-INSERT INTO `journey_routes` (journey_id, day, order_in_day, content_id)
-VALUES 
-    -- 서울 랜드마크 투어 (Journey ID: 1)
-    (1, 1, 1, 2733967), (1, 1, 2, 2763807), -- 1일차
-    (1, 2, 1, 1116925), (1, 2, 2, 294439), -- 2일차
-    (1, 3, 1, 264570), (1, 3, 2, 2456536), -- 3일차
-
-    -- 서울 자연 탐방 (Journey ID: 2)
-    (2, 1, 1, 127377), (2, 1, 2, 128961), -- 1일차
-    (2, 2, 1, 809490), (2, 2, 2, 3043735), -- 2일차
-    (2, 3, 1, 2733968), (2, 3, 2, 2591792), -- 3일차
-
-    -- 서울 역사 유적지 여행 (Journey ID: 3)
-    (3, 1, 1, 126501), (3, 1, 2, 2733966), -- 1일차
-    (3, 2, 1, 2758868), (3, 2, 2, 1604652), -- 2일차
-    (3, 3, 1, 126508), (3, 3, 2, 294505), -- 3일차
-
-    -- admin의 여행 경로
-    -- 서울 공원 투어 (Journey ID: 4)
-    (4, 1, 1, 294439), (4, 1, 2, 3043735), -- 1일차
-    (4, 2, 1, 809490), (4, 2, 2, 264570), -- 2일차
-    (4, 3, 1, 2758868), (4, 3, 2, 128961), -- 3일차
-
-    -- 서울 종로 탐방 (Journey ID: 5)
-    (5, 1, 1, 2930839), (5, 1, 2, 2758868), -- 1일차
-    (5, 2, 1, 127377), (5, 2, 2, 2456536), -- 2일차
-    (5, 3, 1, 2733968), (5, 3, 2, 264570), -- 3일차
-
-    -- 서울 강남 투어 (Journey ID: 6)
-    (6, 1, 1, 2763807), (6, 1, 2, 1116925), -- 1일차
-    (6, 2, 1, 2733967), (6, 2, 2, 3043735), -- 2일차
-    (6, 3, 1, 1604652), (6, 3, 2, 127377); -- 3일차
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`member_journey`
@@ -226,21 +177,19 @@ CREATE TABLE IF NOT EXISTS `member_journey` (
   FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`) ,
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
 ) ENGINE=InnoDB;
-INSERT INTO `member_journey` (user_id, journey_id)
-VALUES 
-    -- ssafy와 연결
-    ('ssafy', 1), -- 서울 랜드마크 투어
-    ('ssafy', 2), -- 서울 자연 탐방
-    ('ssafy', 3), -- 서울 역사 유적지 여행
-
-    -- admin과 연결
-    ('admin', 4), -- 서울 공원 투어
-    ('admin', 5), -- 서울 종로 탐방
-    ('admin', 6); -- 서울 강남 투어
 
 -- -----------------------------------------------------
--- Table `dbdamda`.`reviews`
+-- Table `dbdamda`.`journey_accessibility`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `dbdamda`.`journey_accessibility` ;
+CREATE TABLE IF NOT EXISTS `journey_accessibility` (
+	`id` INT NOT NULL,
+  `journey_id` INT NOT NULL, 
+  `accessible_option` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
+) ENGINE=InnoDB;
+
 DROP TABLE IF EXISTS `dbdamda`.`reviews` ;
 CREATE TABLE IF NOT EXISTS `reviews` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -253,6 +202,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) ,
   FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
 ) ENGINE=InnoDB;
+
 
 commit;
 
