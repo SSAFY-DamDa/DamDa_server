@@ -155,6 +155,17 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `ai` boolean NOT NULL default false,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+INSERT INTO `journeys` (title, start_date, end_date, personnel, color)
+VALUES 
+    -- ssafy의 여행
+    ('서울 랜드마크 투어', '2024-11-20', '2024-11-22', 1, '#FFA500'),
+    ('서울 자연 탐방', '2024-11-25', '2024-11-27', 1, '#00FF00'),
+    ('서울 역사 유적지 여행', '2024-11-30', '2024-12-02', 1, '#1E90FF'),
+
+    -- admin의 여행
+    ('서울 공원 투어', '2024-11-18', '2024-11-20', 1, '#FF6347'),
+    ('서울 종로 탐방', '2024-11-22', '2024-11-24', 1, '#FFD700'),
+    ('서울 강남 투어', '2024-11-28', '2024-11-30', 1, '#ADFF2F');
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`journey_routes`
@@ -170,6 +181,38 @@ CREATE TABLE IF NOT EXISTS `journey_routes` (
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) ,
   FOREIGN KEY (`content_id`) REFERENCES `attractions` (`content_id`)
 ) ENGINE=InnoDB;
+INSERT INTO `journey_routes` (journey_id, day, order_in_day, content_id)
+VALUES 
+    -- 서울 랜드마크 투어 (Journey ID: 1)
+    (1, 1, 1, 2733967), (1, 1, 2, 2763807), -- 1일차
+    (1, 2, 1, 1116925), (1, 2, 2, 294439), -- 2일차
+    (1, 3, 1, 264570), (1, 3, 2, 2456536), -- 3일차
+
+    -- 서울 자연 탐방 (Journey ID: 2)
+    (2, 1, 1, 127377), (2, 1, 2, 128961), -- 1일차
+    (2, 2, 1, 809490), (2, 2, 2, 3043735), -- 2일차
+    (2, 3, 1, 2733968), (2, 3, 2, 2591792), -- 3일차
+
+    -- 서울 역사 유적지 여행 (Journey ID: 3)
+    (3, 1, 1, 126501), (3, 1, 2, 2733966), -- 1일차
+    (3, 2, 1, 2758868), (3, 2, 2, 1604652), -- 2일차
+    (3, 3, 1, 126508), (3, 3, 2, 294505), -- 3일차
+
+    -- admin의 여행 경로
+    -- 서울 공원 투어 (Journey ID: 4)
+    (4, 1, 1, 294439), (4, 1, 2, 3043735), -- 1일차
+    (4, 2, 1, 809490), (4, 2, 2, 264570), -- 2일차
+    (4, 3, 1, 2758868), (4, 3, 2, 128961), -- 3일차
+
+    -- 서울 종로 탐방 (Journey ID: 5)
+    (5, 1, 1, 2930839), (5, 1, 2, 2758868), -- 1일차
+    (5, 2, 1, 127377), (5, 2, 2, 2456536), -- 2일차
+    (5, 3, 1, 2733968), (5, 3, 2, 264570), -- 3일차
+
+    -- 서울 강남 투어 (Journey ID: 6)
+    (6, 1, 1, 2763807), (6, 1, 2, 1116925), -- 1일차
+    (6, 2, 1, 2733967), (6, 2, 2, 3043735), -- 2일차
+    (6, 3, 1, 1604652), (6, 3, 2, 127377); -- 3일차
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`member_journey`
@@ -183,6 +226,17 @@ CREATE TABLE IF NOT EXISTS `member_journey` (
   FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`) ,
   FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
 ) ENGINE=InnoDB;
+INSERT INTO `member_journey` (user_id, journey_id)
+VALUES 
+    -- ssafy와 연결
+    ('ssafy', 1), -- 서울 랜드마크 투어
+    ('ssafy', 2), -- 서울 자연 탐방
+    ('ssafy', 3), -- 서울 역사 유적지 여행
+
+    -- admin과 연결
+    ('admin', 4), -- 서울 공원 투어
+    ('admin', 5), -- 서울 종로 탐방
+    ('admin', 6); -- 서울 강남 투어
 
 -- -----------------------------------------------------
 -- Table `dbdamda`.`reviews`
