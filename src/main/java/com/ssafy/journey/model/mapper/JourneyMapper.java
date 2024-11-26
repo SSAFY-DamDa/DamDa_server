@@ -18,7 +18,7 @@ public interface JourneyMapper {
     void insertJourneyRoute(JourneyRouteDto journeyRouteDto);
     void insertMemberJourney(String userId, int journeyId);
     JourneyDto selectJourneyById(int id);
-    List<JourneyDto> selectJourneyByUserId(String userId);
+    List<JourneyDto> selectJourneyByUserId(Map<String,String> map);
     List<JourneyRouteDto> selectJourneyRoutesByJourneyId(int journeyId);
     void deleteJourneyRoutes(int journeyId);
     void deleteJourneyAccessibility(int journeyId);

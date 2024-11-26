@@ -15,6 +15,7 @@ public interface JourneyService {
     void registerMemberJourney(String userId, int journeyId) throws Exception;
     JourneyDto getJourneyById(int journeyId) throws Exception;
     List<JourneyDto> selectJourneyByUserId(String userId);
+    List<JourneyDto> selectPreJourneyByUserId(String userId, String startDate);
     Map<String, List<TripDto>> getJourneyDetail(int journeyId) throws Exception;
     void deleteJourney(int journeyid);
     void registerReview(ReviewDto reviewDto);
