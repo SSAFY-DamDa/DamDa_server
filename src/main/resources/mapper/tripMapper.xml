@@ -37,6 +37,9 @@
     <if test="area_code != -1">
       AND area_code = #{area_code}
     </if>
+     <if test="si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{si_gun_gu_code}
+    </if>
     <if test="content_type_id != -1">
       AND content_type_id = #{content_type_id}
     </if>
@@ -52,6 +55,9 @@
     WHERE 1=1
     <if test="tripDto.area_code != -1">
       AND area_code = #{tripDto.area_code}
+    </if>
+    <if test="tripDto.si_gun_gu_code != -1">
+      AND si_gun_gu_code = #{tripDto.si_gun_gu_code}
     </if>
     <if test="tripDto.content_type_id != -1">
       AND content_type_id = #{tripDto.content_type_id}
@@ -105,6 +111,25 @@
     SELECT *
     FROM guguns
     WHERE sido_code = #{param1}
+  </select>
+  
+  <select id="getAutoComplete" parameterType="string" resultMap="area">
+	  SELECT 
+    s.sido_code, 
+    s.sido_name, 
+    g.gugun_code, 
+    g.gugun_name
+FROM 
+    dbdamda.sidos s
+JOIN 
+    dbdamda.guguns g
+ON 
+    s.sido_code = g.sido_code
+WHERE 
+    s.sido_name LIKE CONCAT('%', #{title}, '%')
+    OR g.gugun_name LIKE CONCAT('%', #{title}, '%')
+ORDER BY 
+    s.sido_code, g.gugun_code;
   </select>
 
 </mapper>

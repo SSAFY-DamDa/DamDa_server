@@ -15,4 +15,6 @@ public interface TripService {
 
     // 검색 결과의 총 개수를 반환하는 메서드
     int getSearchTotalCount(TripDto tripDto) throws SQLException;
+    
+    public List<AreaDto> getAutoComplete(String title) throws SQLException;
 }
