@@ -119,7 +119,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-        
 -- -----------------------------------------------------
 -- Table `dbdamda`.`faqs`
 -- -----------------------------------------------------
@@ -147,6 +146,7 @@ CREATE TABLE IF NOT EXISTS  `journeys` (
   `end_date` DATE NOT NULL,
   `personnel` INT NOT NULL,
   `color` varchar(100) NOT NULL,
+  `ai` boolean NOT NULL default false,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -179,17 +179,8 @@ CREATE TABLE IF NOT EXISTS `member_journey` (
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- Table `dbdamda`.`journey_accessibility`
+-- Table `dbdamda`.`reviews`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dbdamda`.`journey_accessibility` ;
-CREATE TABLE IF NOT EXISTS `journey_accessibility` (
-	`id` INT NOT NULL,
-  `journey_id` INT NOT NULL, 
-  `accessible_option` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`journey_id`) REFERENCES `journeys` (`id`) 
-) ENGINE=InnoDB;
-
 DROP TABLE IF EXISTS `dbdamda`.`reviews` ;
 CREATE TABLE IF NOT EXISTS `reviews` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -203,10 +194,8 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
 ) ENGINE=InnoDB;
 
-
 commit;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
