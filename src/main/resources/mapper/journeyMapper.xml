@@ -61,7 +61,7 @@
 		WHERE id = #{id}
 	</select>
 
-	<select id="selectJourneyByUserId" parameterType="string"
+	<select id="selectJourneyByUserId" parameterType="map"
 		resultMap="JourneyResultMap">
 		SELECT
 		j.id AS id,
@@ -73,7 +73,11 @@
 		j.ai AS ai
 		FROM member_journey mj
 		LEFT JOIN journeys j ON mj.journey_id = j.id
-		WHERE mj.user_id = #{userId}
+		WHERE 1=1
+		AND mj.user_id = #{userId}
+		<if test="startDate != null and startDate != ''">
+			AND j.start_date LIKE CONCAT(#{startDate}, '%')
+		</if>
 	</select>
 
 	<select id="selectJourneyRoutesByJourneyId" parameterType="int"

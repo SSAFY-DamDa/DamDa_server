@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,18 @@ public class JourneyServiceImpl implements JourneyService {
 	@Override
 	public List<JourneyDto> selectJourneyByUserId(String userId) {
 		// TODO Auto-generated method stub
-		return journeyMapper.selectJourneyByUserId(userId);
+		Map<String, String> map = new HashMap<>();
+		map.put("userId", userId);
+		return journeyMapper.selectJourneyByUserId(map);
+	}
+	
+	@Override
+	public List<JourneyDto> selectPreJourneyByUserId(String userId, String startDate) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("startDate", startDate);
+		return journeyMapper.selectJourneyByUserId(map);
 	}
 
 	@Override

@@ -96,10 +96,21 @@ public class JourneyController {
     	}
     }
     
+    @GetMapping("/pre")
+    public ResponseEntity<Map<String, Object>> getUserPreJourney(@RequestParam String userId, @RequestParam String startDate) {
+    	try {
+    		List<JourneyDto> selectJourneyByUserId = journeyService.selectPreJourneyByUserId(userId, startDate);
+    		Map<String, Object> dataMap = new HashMap<>();
+    		dataMap.put("journey", selectJourneyByUserId);
+    		return new ResponseEntity<>(dataMap, HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
+    
     @GetMapping("/detail/{journeyid}")
     public ResponseEntity<Map<String, List<TripDto>>> getJourneyDetail(@PathVariable int journeyid) {
         try {
-        	System.out.println("ji: " + journeyid);
             Map<String, List<TripDto>> journeyDetail = journeyService.getJourneyDetail(journeyid);
             return new ResponseEntity<>(journeyDetail, HttpStatus.OK);
         } catch (Exception e) {
